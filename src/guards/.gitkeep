@@ -1,0 +1,3 @@
+# .gitkeep
+# Ce fichier permet à Git de conserver ce dossier même s'il est vide.
+# Placez un fichier .gitkeep dans chaque dossier vide sous src que vous souhaitez versionner.
