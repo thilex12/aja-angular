@@ -17,31 +17,24 @@ export const routes: Routes = [
         component: LoginPage
     },
     {
-        path: 'home',
+        path: '',
         component: HomePage,
-        children: [
-            {
-                path: 'tag',
-                component: Tag,
-            },
-            {
-                path: 'user',
-                component: User,
-            },
-            {
-                path: 'event',
-                component: Event
-            },
-            {
-                path: 'localisation',
-                component: Localisation
-            }
-        ]
     },
     {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        path: 'tag',
+        component: Tag,
+    },
+    {
+        path: 'user',
+        component: User,
+    },
+    {
+        path: 'event',
+        component: Event
+    },
+    {
+        path: 'localisation',
+        component: Localisation
     },
     {
         path: 'not-found',
