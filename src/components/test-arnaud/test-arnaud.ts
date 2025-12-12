@@ -7,13 +7,13 @@ import { WhatTimeApi } from '../../services/what-time-api';
   templateUrl: './test-arnaud.html',
   styleUrl: './test-arnaud.scss',
 })
-export class TestArnaud implements OnInit{
+export class TestArnaud {
   protected api = inject(WhatTimeApi);
 
-  ngOnInit() {
-    this.api.getEvents();
-  }
   protected test() {
-    console.log(this.api.events());
+    this.api.getEvents().subscribe(r=>{
+      console.log(this.api.events());
+    })
+    
   }
 }

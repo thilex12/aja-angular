@@ -4,8 +4,8 @@ export interface UserDetailsModel {
   name : string,
   surname : string,
   mail : string,
-  //followTags : Array<number>,
-  //inscriptions : Array<number>,
+  followTags : Array<number>,
+  inscriptions : Array<number>,
   role : string,
 }
 
