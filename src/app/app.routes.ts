@@ -7,6 +7,7 @@ import { UsersPage } from '../components/users-page/users-page';
 import { LocalisationsPage } from '../components/localisations-page/localisations-page';
 import { EventsPage } from '../components/events-page/events-page';
 import { TestArnaud } from '../components/test-arnaud/test-arnaud';
+import { authGuard } from '../guards/auth-guard';
 
 export const routes: Routes = [
     {
@@ -20,22 +21,27 @@ export const routes: Routes = [
     {
         path: '',
         component: HomePage,
+        canActivate: [authGuard]
     },
     {
         path: 'tags',
         component: TagsPage,
+        canActivate: [authGuard]
     },
     {
         path: 'users',
         component: UsersPage,
+        canActivate: [authGuard]
     },
     {
         path: 'events',
         component: EventsPage,
+        canActivate: [authGuard]
     },
     {
         path: 'localisations',
         component: LocalisationsPage,
+        canActivate: [authGuard]
     },
     {
         path: 'not-found',
