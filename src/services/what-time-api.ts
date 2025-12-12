@@ -12,7 +12,7 @@ export class WhatTimeApi {
   protected api = inject(ApiCallService);
   protected cookies = inject(CookieService);
 
-  public events = signal<EventDetailsModel[]>([])
+  public events = signal<EventDetailsModel[]>([]);
 
   public getEvents(){
     let cookies  = this.cookies.get();
