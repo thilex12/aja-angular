@@ -14,7 +14,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class LoginPage {
 
+  email: string = '';
+  password: string = '';
+
   login(form: NgForm) {
+    this.email = form.value.email;
+    this.password = form.value.password;
+    // Implement login logic here
 
   }
 
