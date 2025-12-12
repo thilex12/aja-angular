@@ -1,1 +1,15 @@
-<p>login-page works!</p>
+<div id="form">
+    <h2>Connexion</h2>
+    <form (ngSubmit)="login(loginForm)" (keyup.enter)="login(loginForm)" #loginForm="ngForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Entrer votre email" name="email" ngModel required />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Entrer votre mot de passe" name="password" ngModel required type="password" />
+        </mat-form-field>
+        <br/>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+    </form>
+</div>
