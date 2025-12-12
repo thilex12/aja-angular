@@ -2,9 +2,10 @@ import { Routes } from '@angular/router';
 import { LoginPage } from '../components/login-page/login-page';
 import { NotFoundPage } from '../components/not-found-page/not-found-page';
 import { HomePage } from '../components/home-page/home-page';
-import { Tag } from '../components/tag/tag';
-import { User } from '../components/user/user';
-import { Localisation } from '../components/localisation/localisation';
+import { TagsPage } from '../components/tags-page/tags-page';
+import { UsersPage } from '../components/users-page/users-page';
+import { LocalisationsPage } from '../components/localisations-page/localisations-page';
+import { EventsPage } from '../components/events-page/events-page';
 import { TestArnaud } from '../components/test-arnaud/test-arnaud';
 
 export const routes: Routes = [
@@ -14,38 +15,31 @@ export const routes: Routes = [
     },
     {
         path: 'login',
-        component: LoginPage
-    },
-    {
-        path: 'home',
-        component: HomePage,
-        children: [
-            {
-                path: 'tag',
-                component: Tag,
-            },
-            {
-                path: 'user',
-                component: User,
-            },
-            {
-                path: 'event',
-                component: Event
-            },
-            {
-                path: 'localisation',
-                component: Localisation
-            }
-        ]
+        component: LoginPage,
     },
     {
         path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        component: HomePage,
+    },
+    {
+        path: 'tags',
+        component: TagsPage,
+    },
+    {
+        path: 'users',
+        component: UsersPage,
+    },
+    {
+        path: 'events',
+        component: EventsPage,
+    },
+    {
+        path: 'localisations',
+        component: LocalisationsPage,
     },
     {
         path: 'not-found',
-        component: NotFoundPage
+        component: NotFoundPage,
     },
     {
         path: '**',
