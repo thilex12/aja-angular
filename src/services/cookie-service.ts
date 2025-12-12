@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CookieService {
+  
   public get() : Map<string, string>{
     let cookies = new Map<string, string>();
     document.cookie.split(",").forEach(elmt=>{
@@ -12,6 +13,7 @@ export class CookieService {
     });
     return cookies;
   }
+
   public set(map : Map<string, string>) : void{
     document.cookie = "";
     map.forEach((value, key) => {
