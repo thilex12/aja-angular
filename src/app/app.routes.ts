@@ -11,7 +11,7 @@ import { TestArnaud } from '../components/test-arnaud/test-arnaud';
 export const routes: Routes = [
     {
         path: 'testArnaud',
-        component: TestArnaud
+        component: TestArnaud 
     },
     {
         path: 'login',
