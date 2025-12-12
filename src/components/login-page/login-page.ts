@@ -31,18 +31,11 @@ export class LoginPage {
     this.email = form.value.email;
     this.password = btoa(form.value.password);
     this.api.getInfo(this.email, this.password).subscribe((response) => {
-      // console.log(this.api.user()?.role);
-      // this.role = response.role;
-      // console.log(response.role);
       this.role = this.api.user()?.role;
 
       if (this.role === 'ROLE_ADMIN') {
-        // this.cookieService.set(
-        //   // new Map<string, string>({'username': this.email, 'password': this.password})
-        // );
-        document.cookie = `email=${encodeURIComponent(this.email)}; max-age=3600`;
-        document.cookie = `password=${encodeURIComponent(this.password)}; max-age=3600`;
-
+        document.cookie = `email=${encodeURIComponent(this.email)}; max-age=3600; `;
+        document.cookie = `password=${encodeURIComponent(this.password)}; max-age=3600; `;
         this.router.navigate(['/']);
       } else {
         // Il faut etre admin pour entrer sur le site
