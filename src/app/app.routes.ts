@@ -2,38 +2,39 @@ import { Routes } from '@angular/router';
 import { LoginPage } from '../components/login-page/login-page';
 import { NotFoundPage } from '../components/not-found-page/not-found-page';
 import { HomePage } from '../components/home-page/home-page';
-import { Tag } from '../components/tag/tag';
-import { User } from '../components/user/user';
-import { Localisation } from '../components/localisation/localisation';
+import { TagsPage } from '../components/tags-page/tags-page';
+import { UsersPage } from '../components/users-page/users-page';
+import { LocalisationsPage } from '../components/localisations-page/localisations-page';
+import { EventsPage } from '../components/events-page/events-page';
 
 export const routes: Routes = [
     {
         path: 'login',
-        component: LoginPage
+        component: LoginPage,
     },
     {
         path: '',
         component: HomePage,
     },
     {
-        path: 'tag',
-        component: Tag,
+        path: 'tags',
+        component: TagsPage,
     },
     {
-        path: 'user',
-        component: User,
+        path: 'users',
+        component: UsersPage,
     },
     {
-        path: 'event',
-        component: Event
+        path: 'events',
+        component: EventsPage,
     },
     {
-        path: 'localisation',
-        component: Localisation
+        path: 'localisations',
+        component: LocalisationsPage,
     },
     {
         path: 'not-found',
-        component: NotFoundPage
+        component: NotFoundPage,
     },
     {
         path: '**',
