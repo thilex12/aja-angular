@@ -1,7 +1,8 @@
 import { inject, Injectable, Signal, signal } from '@angular/core';
 import { ApiCallService } from "./api-call-service";
 import { CookieService } from "./cookie-service";
-import { EventDetailsModel, Page } from '../models/event-details/event-details-module';
+import { Page } from '../models/page/page-module';
+import { EventDetailsModel } from '../models/event-details/event-details-module';
 
 @Injectable({
   providedIn: 'root',
@@ -22,12 +23,12 @@ export class WhatTimeApi {
       this.events.set(r.content);
     });
   }
-  public getMe(id : string, p : string){
+  public getUsers(){
     let cookies  = this.cookies.get();
-    let username = id || cookies.get("username");
+    let username = cookies.get("username");
     let pwd = cookies.get("password");
 
-    this.api.get<Page<EventDetailsModel>>("/admin-events", username, pwd).subscribe(r=>{
+    this.api.get<Page<EventDetailsModel>>("/admin-accounts", username, pwd).subscribe(r=>{
       this.events.set(r.content);
     });
   }
