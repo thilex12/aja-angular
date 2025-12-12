@@ -5,7 +5,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { WhatTimeApi } from '../../services/what-time-api';
-import { CookieService } from '../../services/cookie-service';
 import { Router } from '@angular/router';
 
 
@@ -18,7 +17,6 @@ import { Router } from '@angular/router';
 export class LoginPage {
 
   api = inject(WhatTimeApi);
-  cookieService = inject(CookieService);
   router = inject(Router);
 
   email: string = '';
