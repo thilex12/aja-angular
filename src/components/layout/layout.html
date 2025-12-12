@@ -6,10 +6,14 @@
   <span class="page" routerLink="/localisations">Localisation</span>
 
   <button class="button" matIconButton>
-    <mat-icon>favorite</mat-icon>
+    <mat-icon routerLink="/me">account_circle</mat-icon>
   </button>
-  <button class="button" matIconButton>
-    <mat-icon>share</mat-icon>
+  <button class="button" matIconButton (click)="authButton()">
+     @if (isLoggedIn()) {
+       <mat-icon routerLink="/login">logout</mat-icon>
+     } @else {
+       <mat-icon routerLink="/login">login</mat-icon>
+     }
   </button>
 </mat-toolbar>
 

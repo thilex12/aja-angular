@@ -11,4 +11,14 @@ import { RouterLink } from "@angular/router";
 })
 export class Layout {
 
+  isLoggedIn(): boolean {
+    return localStorage.getItem('email') !== null && localStorage.getItem('password') !== null;
+  }
+  authButton(): void {
+    if (this.isLoggedIn()) {
+      // Logout
+      localStorage.removeItem('email');
+      localStorage.removeItem('password');
+    }
+  }
 }
