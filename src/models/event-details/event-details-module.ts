@@ -12,6 +12,4 @@ export interface EventDetailsModel {
   tags : Array<number>
 }
 
-export interface Page<T> {
-  content: T[]
-}
+
