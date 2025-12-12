@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { CookieService } from "./cookie-service";
 
 @Injectable({
   providedIn: 'root',
@@ -8,36 +10,54 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ApiCallService {
   private apiURL : String = environment.url;
   private http = inject(HttpClient);  
+  protected cookies = inject(CookieService);
+
   // Prepare header content (conf basic auth)
-  protected prepareHeader(username : string | undefined, password : string | undefined) : HttpHeaders{
-    let header = new HttpHeaders();
-    header.append('Content-Type', 'application/json');
-    if (username && password){
-      header.append("Authorization", "Basic " + btoa(username+":"+password));
-    }
+  protected prepareHeader(username : string | undefined, password : string | undefined) : Record<string, string | string[]>{
+    let header: Record<string, string | string[]> = {};
+    header["Content-Type"] ="application/json"; 
+    if (username && password) header["Authorization"] = "Basic " + btoa(username+":"+password); 
     return header;
   }
+
   // Call the API with specified method
-  protected call(method : Function, path : string, username : string | undefined, password : string | undefined, query = {} ) : void{
+  protected call<T>(method : string, path : string, username : string | undefined, password : string | undefined, query = {} ) : Observable<T>{
     const httpOptions = {
       headers: this.prepareHeader(username, password)
     };
-    return method(this.apiURL+path, query, httpOptions);
+    switch(method){
+      case "GET" :{
+        return this.http.get<T>(this.apiURL+path, httpOptions);
+      }
+      case "POST" :{
+        return this.http.post<T>(this.apiURL+path, query, httpOptions);
+      }
+      case "PUT" :{
+        return this.http.put<T>(this.apiURL+path, query, httpOptions);
+      }
+      case "DELETE" :{
+        return this.http.delete<T>(this.apiURL+path, httpOptions);
+      }
+      default : {
+        return this.http.get<T>(this.apiURL+path, httpOptions);
+      }
+    }
+    
   }
   // Make a GET call to the API
-  public get(path : string, username : string | undefined, password : string | undefined){
-    return this.call(this.http.get, path, username, password);
+  public get<T>(path : string, username : string | undefined = undefined, password : string | undefined = undefined) : Observable<T>{
+    return this.call<T>("GET", path, username, password);
   }
   // Make a POST call to the API
-  public post(path : string, username : string | undefined, password : string | undefined, datas = {}){
-    return this.call(this.http.post, path, username, password, datas);
+  public post<T>(path : string, username : string | undefined = undefined, password : string | undefined = undefined, datas = {}) : Observable<T>{
+    return this.call<T>("POST", path, username, password, datas);
   }
   // Make a PUT call to the API
-  public put(path : string, username : string | undefined, password : string | undefined, datas = {}){
-    return this.call(this.http.put, path, username, password, datas);
+  public put<T>(path : string, username : string | undefined = undefined, password : string | undefined = undefined, datas = {}) : Observable<T>{
+    return this.call<T>("PUT", path, username, password, datas);
   }
   // Make a DELETE call to the API
-  public delete(path : string, username : string | undefined, password : string | undefined, datas = {}){
-    return this.call(this.http.delete, path, username, password, datas);
+  public delete<T>(path : string, username : string | undefined = undefined, password : string | undefined = undefined, datas = {}) :  Observable<T>{
+    return this.call<T>("DELETE", path, username, password, datas);
   }
 }

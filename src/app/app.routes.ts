@@ -5,8 +5,13 @@ import { HomePage } from '../components/home-page/home-page';
 import { Tag } from '../components/tag/tag';
 import { User } from '../components/user/user';
 import { Localisation } from '../components/localisation/localisation';
+import { TestArnaud } from '../components/test-arnaud/test-arnaud';
 
 export const routes: Routes = [
+    {
+        path: 'testArnaud',
+        component: TestArnaud
+    },
     {
         path: 'login',
         component: LoginPage
