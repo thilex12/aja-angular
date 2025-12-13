@@ -32,8 +32,7 @@ export class LoginPage {
       this.role = this.api.user()?.role;
 
       if (this.role === 'ROLE_ADMIN') {
-        // document.cookie = `email=${encodeURIComponent(this.email)}; max-age=3600; `;
-        // document.cookie = `password=${encodeURIComponent(this.password)}; max-age=3600; `;
+        localStorage.setItem('username', this.email);
         localStorage.setItem('email', this.email);
         localStorage.setItem('password', this.password);
         this.router.navigate(['/']);

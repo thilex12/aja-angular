@@ -24,6 +24,7 @@ export class WhatTimeApi {
       this.events.set(r.content);
     }));
   }
+
   public getUsers() : Observable<Page<UserDetailsModel>>{
     let username = localStorage.getItem("username");
     let pwd = localStorage.getItem("password");
