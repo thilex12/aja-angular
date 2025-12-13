@@ -4,6 +4,7 @@ import { Page } from '../models/page/page-module';
 import { EventDetailsModel } from '../models/event-details/event-details-module';
 import { UserDetailsModel } from '../models/user-details/user-details-module';
 import { Observable, tap } from 'rxjs';
+import { TagModel } from '../models/tag/tag-module';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class WhatTimeApi {
   public events = signal<EventDetailsModel[]>([])
   public user = signal<UserDetailsModel | null>(null);
   public users = signal<UserDetailsModel[]>([]);
+  public tags = signal<TagModel[]>([]);
 
   public getEvents() : Observable<Page<EventDetailsModel>> {
     let username = localStorage.getItem("username");
@@ -40,6 +42,15 @@ export class WhatTimeApi {
 
     return this.api.get<UserDetailsModel>("/accounts/me", username, pwd).pipe(tap((r) => {
       this.user.set(r);
+    }));
+  }
+
+  public getTags(): Observable<Array<TagModel>> {
+    let username = localStorage.getItem("username");
+    let pwd = localStorage.getItem("password");
+
+    return this.api.get<Array<TagModel>>("/tags", username, pwd).pipe(tap((r) => {
+      this.tags.set(r);
     }));
   }
 }

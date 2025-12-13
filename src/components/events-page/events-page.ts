@@ -8,10 +8,11 @@ import {MatListModule} from '@angular/material/list';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { EventDetailsModel } from '../../models/event-details/event-details-module';
 import { Page } from '../../models/page/page-module';
-
+// import { pipe } from 'rxjs';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-events-page',
-  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule],
+  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, DatePipe],
   templateUrl: './events-page.html',
   styleUrl: './events-page.scss',
 })
@@ -22,8 +23,8 @@ export class EventsPage {
 
   ngOnInit() {
     this.api.getEvents().subscribe((response) => {
-      // this.events.set(response.content);
-      console.log(response);
+      this.events.set(response.content);
+      console.log(this.events());
     });
   }
 
