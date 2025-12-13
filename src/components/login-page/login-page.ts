@@ -35,6 +35,7 @@ export class LoginPage {
         localStorage.setItem('username', this.email);
         localStorage.setItem('email', this.email);
         localStorage.setItem('password', this.password);
+        this.api.getTags().subscribe();
         this.router.navigate(['/']);
       } else {
         // Il faut etre admin pour entrer sur le site

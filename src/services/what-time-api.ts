@@ -51,6 +51,8 @@ export class WhatTimeApi {
 
     return this.api.get<Array<TagModel>>("/tags", username, pwd).pipe(tap((r) => {
       this.tags.set(r);
+      localStorage.setItem('tags', JSON.stringify(r));
+      // console.log(localStorage.getItem('tags'));
     }));
   }
 }
