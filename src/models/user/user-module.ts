@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+export interface UserModel { 
+  id : number,
+  name : string,
+  surname : string,
+  mail : string,
+}
 
-
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
-export class UserModule { }
+//  {
+//         "id": 1,
+//         "name": "John",
+//         "surname": "John",
+//         "mail": "mail@gmail.com"
+//     },

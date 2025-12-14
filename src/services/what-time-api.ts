@@ -6,6 +6,7 @@ import { UserDetailsModel } from '../models/user-details/user-details-module';
 import { Observable, tap } from 'rxjs';
 import { TagModel } from '../models/tag/tag-module';
 import { LocalisationModel } from '../models/localisation/localisation-module';
+import { UserModel } from '../models/user/user-module';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,9 @@ export class WhatTimeApi {
   protected api = inject(ApiCallService);
 
   public events = signal<EventDetailsModel[]>([])
+  public adminUser = signal<UserDetailsModel | null>(null);
   public user = signal<UserDetailsModel | null>(null);
-  public users = signal<UserDetailsModel[]>([]);
+  public users = signal<UserModel[]>([]);
   public tags = signal<TagModel[]>([]);
 
   public getEvents() : Observable<Page<EventDetailsModel>> {
@@ -36,12 +38,20 @@ export class WhatTimeApi {
     }));
   }
 
-  public getUsers() : Observable<Page<UserDetailsModel>>{
+  public getUsers() : Observable<Page<UserModel>>{
     let username = localStorage.getItem("username");
     let pwd = localStorage.getItem("password");
 
-    return this.api.get<Page<UserDetailsModel>>("/admin-accounts", username, pwd).pipe(tap((r) => {
+    return this.api.get<Page<UserModel>>("/admin-accounts", username, pwd).pipe(tap((r) => {
       this.users.set(r.content);
+    }));
+  }
+
+  public getUserById(id: number) : Observable<UserDetailsModel> {
+    let username = localStorage.getItem("username");
+    let pwd = localStorage.getItem("password");
+    return this.api.get<UserDetailsModel>("/admin-accounts/" + id, username, pwd).pipe(tap((r) => {
+      this.user.set(r);
     }));
   }
 
@@ -50,7 +60,7 @@ export class WhatTimeApi {
     let pwd = p || localStorage.getItem("password");
 
     return this.api.get<UserDetailsModel>("/accounts/me", username, pwd).pipe(tap((r) => {
-      this.user.set(r);
+      this.adminUser.set(r);
     }));
   }
 

@@ -29,7 +29,7 @@ export class LoginPage {
     this.email = form.value.email;
     this.password = btoa(form.value.password);
     this.api.getInfo(this.email, this.password).subscribe((response) => {
-      this.role = this.api.user()?.role;
+      this.role = this.api.adminUser()?.role;
 
       if (this.role === 'ROLE_ADMIN') {
         localStorage.setItem('username', this.email);
