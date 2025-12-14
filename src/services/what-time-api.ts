@@ -5,6 +5,7 @@ import { EventDetailsModel } from '../models/event-details/event-details-module'
 import { UserDetailsModel } from '../models/user-details/user-details-module';
 import { Observable, tap } from 'rxjs';
 import { TagModel } from '../models/tag/tag-module';
+import { LocalisationModel } from '../models/localisation/localisation-module';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +53,16 @@ export class WhatTimeApi {
     return this.api.get<Array<TagModel>>("/tags", username, pwd).pipe(tap((r) => {
       this.tags.set(r);
       localStorage.setItem('tags', JSON.stringify(r));
+      // console.log(localStorage.getItem('tags'));
+    }));
+  }
+
+  public getLoc(): Observable<Array<LocalisationModel>> {
+    let username = localStorage.getItem("username");
+    let pwd = localStorage.getItem("password");
+    return this.api.get<Array<LocalisationModel>>("/locations", username, pwd).pipe(tap((r) => {
+      // this.tags.set(r);
+      localStorage.setItem('locations', JSON.stringify(r));
       // console.log(localStorage.getItem('tags'));
     }));
   }
