@@ -28,7 +28,7 @@ export class EventsPage {
   ngOnInit() {
     this.api.getEvents().subscribe((response) => {
       this.events.set(response.content);
-      console.log(this.events());
+      // console.log(this.events());
     });
   }
 
