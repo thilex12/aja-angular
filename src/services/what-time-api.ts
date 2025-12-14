@@ -27,6 +27,14 @@ export class WhatTimeApi {
       this.events.set(r.content);
     }));
   }
+  
+  public getEventById(id: number) : Observable<EventDetailsModel> {
+    let username = localStorage.getItem("username");
+    let pwd = localStorage.getItem("password");
+    return this.api.get<EventDetailsModel>("/events/" + id, username, pwd).pipe(tap((r) => {
+      // this.events.set(r);
+    }));
+  }
 
   public getUsers() : Observable<Page<UserDetailsModel>>{
     let username = localStorage.getItem("username");
