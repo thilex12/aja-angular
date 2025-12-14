@@ -21,6 +21,10 @@ export class EventsPage {
   
   events = signal<EventDetailsModel[]>([]);
 
+  tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
+
+  locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
+
   ngOnInit() {
     this.api.getEvents().subscribe((response) => {
       this.events.set(response.content);
