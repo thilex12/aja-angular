@@ -10,9 +10,9 @@
   </button>
   <button class="button" matIconButton (click)="authButton()">
      @if (isLoggedIn()) {
-       <mat-icon routerLink="/login">logout</mat-icon>
+       <mat-icon>logout</mat-icon>
      } @else {
-       <mat-icon routerLink="/login">login</mat-icon>
+       <mat-icon>login</mat-icon>
      }
   </button>
 </mat-toolbar>
