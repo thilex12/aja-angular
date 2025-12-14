@@ -74,6 +74,19 @@ export class WhatTimeApi {
       // console.log(localStorage.getItem('tags'));
     }));
   }
+
+
+
+
+  // Ajout
+
+  public createTag(name: string, description: string): Observable<TagModel> {
+    let username = localStorage.getItem("username");
+    let pwd = localStorage.getItem("password");
+    return this.api.post<TagModel>("/tags", username, pwd, { name, description }).pipe(tap((r) => {
+      this.getTags().subscribe();
+    }));
+  }
 }
 
 
