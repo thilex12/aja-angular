@@ -38,12 +38,12 @@ export class WhatTimeApi {
     }));
   }
 
-  public getUsers() : Observable<Page<UserModel>>{
+  public getUsers() : Observable<Array<UserModel>>{
     let username = localStorage.getItem("username");
     let pwd = localStorage.getItem("password");
 
-    return this.api.get<Page<UserModel>>("/admin-accounts", username, pwd).pipe(tap((r) => {
-      this.users.set(r.content);
+    return this.api.get<Array<UserModel>>("/admin-accounts", username, pwd).pipe(tap((r) => {
+      this.users.set(r);
     }));
   }
 
