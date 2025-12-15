@@ -4,9 +4,32 @@
             <mat-card-title>Utilisateurs</mat-card-title>
         </mat-card-header>
         <br>
-        <mat-card-content>      
+        <mat-card-content>
+            <p>Nombre d'utilisateurs : {{users().length}}</p>
             <mat-accordion>
-                <mat-expansion-panel>
+                @for (user of users(); track user.id) {
+                    <mat-expansion-panel (opened)="getUserDetails(user.id)">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> Utilisateur {{user.id}} </mat-panel-title>
+                            <mat-panel-description> {{user.name}} {{user.surname}} </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-divider></mat-divider>
+                        <!-- Faire la liste en fonction du detail de l'utilisateur si on clique dessus -->
+
+                        <p>nom : {{userDetails()?.name}}</p>
+                        <p>prénom : {{userDetails()?.surname}}</p>
+                        <p>mail : {{userDetails()?.mail}}</p>
+                        <p>tags : 
+                            <mat-nav-list role="list">
+                                @for (tag of userDetails()?.followTags ?? []; track tag) {
+                                    <div matListItemMeta>
+                                        • {{tag.nameTag}}
+                                    </div>
+                                }
+                            </mat-nav-list></p>
+                    </mat-expansion-panel>
+                }
+                <!-- <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title> Utilisateur 1 </mat-panel-title>
                         <mat-panel-description> description </mat-panel-description>
@@ -41,7 +64,7 @@
                                 </div>
                             }
                         </mat-nav-list></p>
-                </mat-expansion-panel>
+                </mat-expansion-panel> -->
             </mat-accordion>
         </mat-card-content>
     </mat-card>
