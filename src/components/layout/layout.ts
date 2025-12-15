@@ -2,10 +2,10 @@ import {Component, inject} from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import { Router, RouterLink } from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 @Component({
   selector: 'app-layout',
-  imports: [MatToolbarModule, MatIconModule, MatButtonModule, RouterLink],
+  imports: [MatToolbarModule, MatIconModule, MatButtonModule, RouterLink, RouterLinkActive],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
 })

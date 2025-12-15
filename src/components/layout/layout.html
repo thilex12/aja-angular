@@ -1,9 +1,9 @@
 <mat-toolbar>
-  <span class="page" routerLink="/">Stats</span>
-  <span class="page" routerLink="/events">Événements</span>
-  <span class="page" routerLink="/tags">Tags</span>
-  <span class="page" routerLink="/users">Utilisateurs</span>
-  <span class="page" routerLink="/localisations">Localisation</span>
+  <span class="page" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Stats</span>
+  <span class="page" routerLink="/events" routerLinkActive="active">Événements</span>
+  <span class="page" routerLink="/tags" routerLinkActive="active">Tags</span>
+  <span class="page" routerLink="/users" routerLinkActive="active">Utilisateurs</span>
+  <span class="page" routerLink="/localisations" routerLinkActive="active">Localisation</span>
 
   <button class="button" matIconButton>
     <mat-icon routerLink="/me">account_circle</mat-icon>
