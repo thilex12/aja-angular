@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Layout } from "../layout/layout";
 import { RouterOutlet } from "@angular/router";
@@ -13,5 +13,7 @@ import {MatListModule} from '@angular/material/list';
   styleUrl: './tags-page.scss',
 })
 export class TagsPage {
+
+  protected tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
 
 }

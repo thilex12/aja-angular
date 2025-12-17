@@ -14,5 +14,6 @@ import { L } from '@angular/cdk/keycodes';
   styleUrl: './localisations-page.scss',
 })
 export class LocalisationsPage {
+  locs = JSON.parse(localStorage.getItem('locations') || '[]');
 
 }

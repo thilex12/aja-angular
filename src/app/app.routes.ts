@@ -8,6 +8,7 @@ import { LocalisationsPage } from '../components/localisations-page/localisation
 import { EventsPage } from '../components/events-page/events-page';
 import { TestArnaud } from '../components/test-arnaud/test-arnaud';
 import { authGuard } from '../guards/auth-guard';
+// import { LogoutPage } from '../components/logout-page/logout-page';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,10 @@ export const routes: Routes = [
         path: 'login',
         component: LoginPage,
     },
+    // {
+    //     path: 'logout',
+    //     component: LogoutPage,
+    // },
     {
         path: '',
         component: HomePage,

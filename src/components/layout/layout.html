@@ -1,15 +1,19 @@
 <mat-toolbar>
-  <span class="page" routerLink="/">Stats</span>
-  <span class="page" routerLink="/events">Events</span>
-  <span class="page" routerLink="/tags">Tags</span>
-  <span class="page" routerLink="/users">Users</span>
-  <span class="page" routerLink="/localisations">Localisation</span>
+  <span class="page" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Stats</span>
+  <span class="page" routerLink="/events" routerLinkActive="active">Événements</span>
+  <span class="page" routerLink="/tags" routerLinkActive="active">Tags</span>
+  <span class="page" routerLink="/users" routerLinkActive="active">Utilisateurs</span>
+  <span class="page" routerLink="/localisations" routerLinkActive="active">Localisation</span>
 
-  <button class="button-toolBar" matIconButton>
-    <mat-icon>favorite</mat-icon>
+  <button class="button" matIconButton>
+    <mat-icon routerLink="/me">account_circle</mat-icon>
   </button>
-  <button class="button-toolBar" matIconButton>
-    <mat-icon>share</mat-icon>
+  <button class="button" matIconButton (click)="authButton()">
+     @if (isLoggedIn()) {
+       <mat-icon>logout</mat-icon>
+     } @else {
+       <mat-icon>login</mat-icon>
+     }
   </button>
 </mat-toolbar>
 <mat-divider></mat-divider>

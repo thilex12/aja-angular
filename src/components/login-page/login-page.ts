@@ -29,13 +29,14 @@ export class LoginPage {
     this.email = form.value.email;
     this.password = btoa(form.value.password);
     this.api.getInfo(this.email, this.password).subscribe((response) => {
-      this.role = this.api.user()?.role;
+      this.role = this.api.adminUser()?.role;
 
       if (this.role === 'ROLE_ADMIN') {
-        // document.cookie = `email=${encodeURIComponent(this.email)}; max-age=3600; `;
-        // document.cookie = `password=${encodeURIComponent(this.password)}; max-age=3600; `;
+        localStorage.setItem('username', this.email);
         localStorage.setItem('email', this.email);
         localStorage.setItem('password', this.password);
+        this.api.getTags().subscribe();
+        this.api.getLoc().subscribe();
         this.router.navigate(['/']);
       } else {
         // Il faut etre admin pour entrer sur le site
