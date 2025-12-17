@@ -14,7 +14,7 @@ export class ApiCallService {
   protected prepareHeader(username : string | null, password : string | null) : Record<string, string | string[]>{
     let header: Record<string, string | string[]> = {};
     header["Content-Type"] ="application/json"; 
-    if (username && password) header["Authorization"] = "Basic " + btoa(username+":")+password; 
+    if (username && password) header["Authorization"] = "Basic " + btoa(username+":"+atob(password)); 
     return header;
   }
 
