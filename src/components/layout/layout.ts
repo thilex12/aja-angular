@@ -4,6 +4,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { authGuard } from '../../guards/auth-guard';
+import { AuthService } from '../../services/auth-service';
 @Component({
   selector: 'app-layout',
   imports: [MatToolbarModule, MatIconModule, MatButtonModule, RouterLink, RouterLinkActive, MatDivider],
@@ -13,15 +15,16 @@ import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 export class Layout {
 
   readonly router = inject(Router);
+  readonly auth = inject(AuthService)
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('email') !== null && localStorage.getItem('password') !== null;
+    return this.auth.isLoggedIn();
   }
   authButton(): void {
     if (this.isLoggedIn()) {
       // Logout
       // console.log('Logging out...');
-      localStorage.removeItem('email');
+      // localStorage.removeItem('email');
       localStorage.removeItem('password');
       localStorage.removeItem('username');
       localStorage.removeItem('tags');

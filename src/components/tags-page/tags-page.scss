@@ -1,19 +1,19 @@
 .tags-container {
-  padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0;
 }
 
 .page-title {
   font-size: 2rem;
   font-weight: 500;
   margin-bottom: 2rem;
-  color: #333;
+  color: var(--mat-sys-primary);
 }
 
 .tags-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   padding: 0;
 }
@@ -21,16 +21,16 @@
 .tag-card {
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 12px;
+  border-radius: 12px !important;
   overflow: hidden;
   
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
   }
 
   mat-card-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--mat-sys-primary) 0%, var(--mat-sys-tertiary) 100%);
     padding: 1.5rem;
     
     .tag-name {
@@ -43,9 +43,10 @@
 
   mat-card-content {
     padding: 1rem 1.5rem;
+    background-color: var(--mat-sys-surface);
     
     .tag-id {
-      color: #666;
+      color: var(--mat-sys-on-surface-variant);
       font-size: 0.875rem;
       margin: 0;
     }
