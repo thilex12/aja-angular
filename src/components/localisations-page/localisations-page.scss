@@ -75,12 +75,29 @@
     flex-direction: column;
     gap: 16px;
     
-    .location-address {
-      font-size: 18px;
+    .location-name {
+      font-size: 20px;
       font-weight: 600;
       color: var(--mat-sys-primary);
       margin: 0;
       line-height: 1.4;
+    }
+    
+    .location-address {
+      font-size: 15px;
+      color: var(--mat-sys-on-surface);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.4;
+      
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: var(--mat-sys-on-surface-variant);
+      }
     }
     
     .location-description {

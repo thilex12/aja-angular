@@ -11,6 +11,8 @@ import { EventDetailsModel } from '../../models/event-details/event-details-modu
 import { Page } from '../../models/page/page-module';
 // import { pipe } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { LocalisationModel } from '../../models/localisation/localisation-module';
+import { TagModel } from '../../models/tag/tag-module';
 @Component({
   selector: 'app-events-page',
   imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, DatePipe],
@@ -21,16 +23,12 @@ export class EventsPage {
   api = inject(WhatTimeApi);
   
   events = signal<EventDetailsModel[]>([]);
-
-  tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
-
-  locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
-
+  locs = signal<LocalisationModel[]>([]);
+  tags = signal<TagModel[]>([]);
   ngOnInit() {
-    this.api.getEvents().subscribe((response) => {
-      this.events.set(response.content);
-      // console.log(this.events());
-    });
+    this.events.set(this.api.getEvents());
+    this.locs.set(this.api.getLoc());
+    this.tags.set(this.api.getTags());
   }
 
 }

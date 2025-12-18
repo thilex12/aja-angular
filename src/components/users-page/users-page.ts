@@ -16,6 +16,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersDialog } from '../users-dialog/users-dialog';
 import { EventDetailsModel } from '../../models/event-details/event-details-module';
+import { TagModel } from '../../models/tag/tag-module';
+import { LocalisationModel } from '../../models/localisation/localisation-module';
 
 
 @Component({
@@ -30,50 +32,46 @@ export class UsersPage implements OnInit {
 
   events = signal<EventDetailsModel[]>([]);
   api = inject(WhatTimeApi);
-  users = signal<UserModel[]>([]);
+  // users = signal<UserModel[]>([]);
   userDetails = signal<UserDetailsModel | null>(null);
-  tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
-  // events = signal(JSON.parse(localStorage.getItem('events') || '[]'));
+  tags = signal<TagModel[]>([]);
+  locs = signal<LocalisationModel[]>([]);
+  user = signal<UserModel | null>(null);
 
-
-  getUserDetails(id: number) {
-    this.api.getUserById(id).subscribe((response) => {
-      this.userDetails.set(response);
-      // console.log(response);
-    });
-  }
 
   getEventName(eventId: number): string {
     const event = this.events().find(e => e.id === eventId);
     return event?.name || `Événement ${eventId}`;
   }
 
-  ngOnInit() {
-    this.api.getEvents().subscribe((response) => {
-      this.events.set(response.content);
-      // console.log(this.events());
-    });
-    // console.log("ngOnInit appelé");
-    // console.log("Username:", localStorage.getItem('username'));
-    // console.log("Password:", localStorage.getItem('password'));
-    
-    this.api.getUsers().subscribe({
-      next: (response) => {
-        // console.log("Response complète:", response);
-        // console.log("Response.content:", response);
-        this.users.set(response);
-        // console.log("Users() après set:", this.users());
-      },
-      error: (err) => {
-        console.error("Erreur API:", err);
-      }
-    });
+  getUserDetails(userId: number): void {
+    this.api.getUserById(userId);
+    // return this.api.getUserDetailsById(userId);
   }
+  getUserSignal(): UserDetailsModel | null {
+    return this.api.getUserById();
+  }
+  
+
+  ngOnInit() {
+    this.events.set(this.api.getEvents());
+    this.locs.set(this.api.getLoc());
+    this.tags.set(this.api.getTags());
+    // this.users.set(this.api.getUsers());
+    // this.api.getUsers()
+  }
+
+
   protected loading: boolean = true;
   protected dialog = inject(MatDialog);
 
-openDialog(): void {
+  openDialog(): void {
 
-  const dialogRef = this.dialog.open(UsersDialog, {});
-}
+    const dialogRef = this.dialog.open(UsersDialog, {});
+  }
+
+  protected getUsers(): UserModel[]{
+    return this.api.getUsers();
+  }
+
 }

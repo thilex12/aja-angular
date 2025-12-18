@@ -2,11 +2,11 @@
     <div class="users-container">
         <div class="users-header">
             <h1 class="page-title">Utilisateurs</h1>
-            <p class="users-count">{{users().length}} utilisateur(s)</p>
+            <p class="users-count">{{getUsers().length}} utilisateur(s)</p>
         </div>
         
         <div class="users-grid">
-            @for (user of users(); track user.id) {
+            @for (user of getUsers(); track user.id) {
                 <mat-card class="user-card" appearance="outlined" (click)="getUserDetails(user.id)">
                     <div class="user-header">
                         <div class="user-avatar">
@@ -19,37 +19,37 @@
                     </div>
                     
                     <mat-card-content class="user-content">
-                        @if (userDetails()?.id === user.id) {
+                        @if (getUserSignal() && getUserSignal()!.id === user.id) {
                             <div class="user-details">
                                 <div class="detail-section">
                                     <div class="detail-item">
                                         <mat-icon>email</mat-icon>
-                                        <span>{{userDetails()?.mail}}</span>
+                                        <span>{{getUserSignal()!.mail}}</span>
                                     </div>
                                 </div>
                                 
-                                @if (userDetails()?.followTags && userDetails()!.followTags.length > 0) {
+                                @if (getUserSignal()!.followTags && getUserSignal()!.followTags.length > 0) {
                                     <div class="detail-section">
                                         <h3 class="section-title">
                                             <mat-icon>label</mat-icon>
                                             Tags suivis
                                         </h3>
                                         <div class="tags-list">
-                                            @for (tag of userDetails()?.followTags ?? []; track tag) {
+                                            @for (tag of getUserSignal()!.followTags; track tag) {
                                                 <span class="tag-chip">{{tag.nameTag}}</span>
                                             }
                                         </div>
                                     </div>
                                 }
                                 
-                                @if (userDetails()?.inscriptions && userDetails()!.inscriptions.length > 0) {
+                                @if (getUserSignal()!.inscriptions && getUserSignal()!.inscriptions.length > 0) {
                                     <div class="detail-section">
                                         <h3 class="section-title">
                                             <mat-icon>event_available</mat-icon>
                                             Inscriptions
                                         </h3>
                                         <div class="inscriptions-list">
-                                            @for (inscription of userDetails()?.inscriptions ?? []; track inscription.id) {
+                                            @for (inscription of getUserSignal()!.inscriptions; track inscription.id) {
                                                 <div class="inscription-item">
                                                     <mat-icon>chevron_right</mat-icon>
                                                     <span>{{getEventName(inscription.eventId)}}</span>

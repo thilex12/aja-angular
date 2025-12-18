@@ -3,7 +3,7 @@
         <h1 class="page-title">Tags</h1>
         
         <div class="tags-grid">
-            @for (tag of tags(); track tag.id) {
+            @for (tag of getTags(); track tag.id) {
                 <mat-card class="tag-card" appearance="outlined">
                     <mat-card-header>
                         <mat-card-title class="tag-name">{{tag.name}}</mat-card-title>

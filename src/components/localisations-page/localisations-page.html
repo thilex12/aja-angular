@@ -15,7 +15,11 @@
                     </div>
                     
                     <mat-card-content class="location-content">
-                        <h2 class="location-address">{{loc.address}}</h2>
+                        <h2 class="location-name">{{loc.name}}</h2>
+                        <p class="location-address">
+                            <mat-icon>place</mat-icon>
+                            {{loc.address}}
+                        </p>
                         
                         @if (loc.description) {
                             <p class="location-description">{{loc.description}}</p>

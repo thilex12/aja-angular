@@ -22,9 +22,8 @@ export class UsersDialog {
   create(form: NgForm) {
   this.mail = form.value.email;
   this.password = form.value.password;
-  this.api.getInfo(this.mail, this.password).subscribe((response) => {
-    console.log(this.api.user()?.role);
-  });
+
+  console.log(this.api.getInfo(this.mail, this.password));
 }
 
   onCancelClick(): void {
