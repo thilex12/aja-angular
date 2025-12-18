@@ -4,6 +4,8 @@ import { RouterOutlet } from '@angular/router';
 import { MatCardHeader, MatCardTitle, MatCardContent, MatCard } from "@angular/material/card";
 import { WhatTimeApi } from '../../services/what-time-api';
 import { EventDetailsModel } from '../../models/event-details/event-details-module';
+import { UserDetailsModel } from '../../models/user-details/user-details-module';
+import { UserModel } from '../../models/user/user-module';
 
 @Component({
   selector: 'app-home-page',
@@ -17,11 +19,11 @@ export class HomePage {
   locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
   protected search = signal(""); 
-  protected events = computed(()=>this.api.events());
-  protected users = computed(()=>this.api.users());
+  protected events = computed(()=>this.api.getEvents());
+  protected users = computed(()=>this.api.getUsers());
 
-  ngOnInit() {
-    this.api.getUsers().subscribe((response) => {});
-    this.api.getEvents().subscribe((response) => {console.log(this.api.events())});
-  }
+  /*ngOnInit() {
+    this._events.set(this.api.getEvents());
+    this._users.set(this.api.getUsers());
+  }*/
 }

@@ -2,7 +2,6 @@
     <mat-card class="listEvents" appearance="outlined">
         <mat-card-header>
             <mat-card-title>Événements</mat-card-title>
-            <p class="events-count">{{events().length}} événement(s)</p>
         </mat-card-header>
         <br>
         <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
@@ -13,6 +12,7 @@
             <button matButton type="submit" [disabled]="!myForm.form.valid" >Rechercher</button>
         </form>
         <mat-card-content>      
+            <p class="events-count">{{events().length}} événement(s)</p>
             <mat-accordion>
 
                 @for ( event of events(); track event.id) {

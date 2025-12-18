@@ -12,7 +12,6 @@ import { MatButton } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
 import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TagModel } from '../../models/tag/tag-module';
 
 @Component({
   selector: 'app-tags-page',
@@ -23,13 +22,12 @@ import { TagModel } from '../../models/tag/tag-module';
 export class TagsPage {
   api = inject(WhatTimeApi);
 
-  // protected tags = this.api.getTags();
   getTags() : TagModel[]{
     return this.api.getTags();
   }
-  protected fullTags : Signal<TagModel[]> = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
+
   protected search = signal(""); 
-  protected tags : Signal<TagModel[]> = computed(() => this.fullTags().filter(
+  protected tags : Signal<TagModel[]> = computed(() => this.getTags().filter(
       (line) => {
         return  line.name.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
                 line.id == parseInt(this.search());

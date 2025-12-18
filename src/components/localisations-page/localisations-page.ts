@@ -24,7 +24,13 @@ export class LocalisationsPage {
   // fullLocs : Signal<LocalisationModel[]>  = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
   search = signal<string>("");
-  locs : Signal<LocalisationModel[]> = computed(() => this.fullLocs().filter(
+  api = inject(WhatTimeApi);
+
+  protected getLocs(): LocalisationModel[]{
+      return this.api.getLocs();
+    }
+
+  locs : Signal<LocalisationModel[]> = computed(() => this.getLocs().filter(
       (line) => {
         return  line.name?.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
                 line.address?.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) ||
@@ -38,7 +44,4 @@ export class LocalisationsPage {
   protected onSubmit(form : any) : void{
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
   }
-  api = inject(WhatTimeApi);
-  locs = this.api.getLoc();
-
 }

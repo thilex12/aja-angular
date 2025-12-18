@@ -30,7 +30,12 @@ export class EventsPage {
   locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
   protected search = signal(""); 
-  protected events = computed(() => this.api.events().filter(
+
+  getEvents() : EventDetailsModel[]{
+    return this.api.getEvents();
+  }
+  
+  protected events = computed(() => this.getEvents().filter(
       (line) => {
         return  line.name.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
                 line.description.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
@@ -38,17 +43,6 @@ export class EventsPage {
       }
     )
   );
-
-  
-  events = signal<EventDetailsModel[]>([]);
-  locs = signal<LocalisationModel[]>([]);
-  tags = signal<TagModel[]>([]);
-  ngOnInit() {
-    this.events.set(this.api.getEvents());
-    this.locs.set(this.api.getLoc());
-    this.tags.set(this.api.getTags());
-    this.api.getEvents().subscribe((response) => {});
-  }
 
   protected onSubmit(form : any) : void{
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));

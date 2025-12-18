@@ -28,36 +28,29 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './users-page.html',
   styleUrl: './users-page.scss',
 })
-export class UsersPage implements OnInit {
-  // protected listTags = ['tag 1', 'tag 2', 'tag 3',]
-  // users = signal<UserModule[]>([]);
-
+export class UsersPage {
   events = signal<EventDetailsModel[]>([]);
   api = inject(WhatTimeApi);
-  // users = signal<UserModel[]>([]);
   userDetails = signal<UserDetailsModel | null>(null);
-  tags = signal<TagModel[]>([]);
-  locs = signal<LocalisationModel[]>([]);
-  user = signal<UserModel | null>(null);
 
-
-  getEventName(eventId: number): string {
+  protected getEventName(eventId: number): string {
     const event = this.events().find(e => e.id === eventId);
     return event?.name || `Événement ${eventId}`;
   }
 
-  getUserDetails(userId: number): void {
+  protected getUsers(): UserModel[]{
+    return this.api.getUsers();
+  }
+  protected getUserDetails(userId: number): void {
     this.api.getUserById(userId);
     // return this.api.getUserDetailsById(userId);
   }
-  getUserSignal(): UserDetailsModel | null {
+  protected getUserSignal(): UserDetailsModel | null {
     return this.api.getUserById();
   }
-  
-  tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
 
   search = signal<string>("");
-  users : Signal<UserModel[]> = computed(() => this.api.users().filter(
+  users : Signal<UserModel[]> = computed(() => this.getUsers().filter(
       (line) => {
         return  line.name.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
                 line.surname.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) ||
@@ -67,50 +60,14 @@ export class UsersPage implements OnInit {
     )
   );
 
-
-  getUserDetails(id: number) {
-    this.api.getUserById(id).subscribe((response) => {
-      this.userDetails.set(response);
-      // console.log(response);
-    });
-  }
-
-  ngOnInit() {
-    this.events.set(this.api.getEvents());
-    this.locs.set(this.api.getLoc());
-    this.tags.set(this.api.getTags());
-    // this.users.set(this.api.getUsers());
-    // this.api.getUsers()
-  }
-
-
-    // console.log("ngOnInit appelé");
-    // console.log("Username:", localStorage.getItem('username'));
-    // console.log("Password:", localStorage.getItem('password'));
-    
-    this.api.getUsers().subscribe({
-      next: (response) => {
-        // console.log("Response complète:", response);
-        // console.log("Response.content:", response);
-
-      },
-      error: (err) => {
-        console.error("Erreur API:", err);
-      }
-    });
-  }
   protected loading: boolean = true;
   protected dialog = inject(MatDialog);
 
-    openDialog(): void {
-
-      const dialogRef = this.dialog.open(UsersDialog, {});
-    }
-
-  protected getUsers(): UserModel[]{
-    return this.api.getUsers();
+  openDialog(): void {
+    const dialogRef = this.dialog.open(UsersDialog, {});
   }
 
+  ngOnInit(){}
 
   protected onSubmit(form : any) : void{
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));

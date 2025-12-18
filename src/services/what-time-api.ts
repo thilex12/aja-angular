@@ -46,7 +46,7 @@ export class WhatTimeApi {
     this.http.get<EventDetailsModel>(this.url + '/events/' + id).subscribe((response) => {
       this.event.set(response);
     });
-    return this.event() as EventDetailsModel;
+    return this.event() as EventDetailsModel; // Due to | null
   }
   
   // public getEventById(id: number) : Observable<EventDetailsModel> {
@@ -72,7 +72,7 @@ export class WhatTimeApi {
         this.user.set(r);
       });
     }
-    return this.user() as UserDetailsModel;
+    return this.user() as UserDetailsModel; // Due to | null
   }
 
   public getInfo(id: string, p: string): Observable<UserDetailsModel> {
@@ -99,12 +99,13 @@ export class WhatTimeApi {
     if (this.tags().length === 0) {
       this.http.get<Array<TagModel>>(this.url + '/tags').subscribe((response) => {
         this.tags.set(response);
+        console.log("HERE");
       });
     }
     return this.tags();
   }
 
-  public getLoc(): LocalisationModel[] {
+  public getLocs(): LocalisationModel[] {
     if (this.locs().length === 0) {
       this.http.get<Array<LocalisationModel>>(this.url + '/locations').subscribe((response) => {
         this.locs.set(response);
@@ -114,6 +115,7 @@ export class WhatTimeApi {
   }
 
   // Ajout
+  /*
   public createTag(name: string, description: string): undefined {
     let newTag = {  name };
     // addedTag:TagModel(null);
@@ -121,7 +123,7 @@ export class WhatTimeApi {
       this.getTags();
       return response as TagModel;
     });
-  }
+  }*/
 
 
 
