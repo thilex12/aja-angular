@@ -50,7 +50,7 @@ export class WhatTimeApi {
   public getUserById(id: number) : Observable<UserDetailsModel> {
     let username = localStorage.getItem("username");
     let pwd = localStorage.getItem("password");
-    return this.api.get<UserDetailsModel>("/admin-accounts/" + id, username, pwd).pipe(tap((r) => {
+    return this.api.get<UserDetailsModel>(`/admin-accounts/${id}`, username, pwd).pipe(tap((r) => {
       this.user.set(r);
     }));
   }
@@ -85,11 +85,7 @@ export class WhatTimeApi {
     }));
   }
 
-
-
-
   // Ajout
-
   public createTag(name: string, description: string): Observable<TagModel> {
     let username = localStorage.getItem("username");
     let pwd = localStorage.getItem("password");
