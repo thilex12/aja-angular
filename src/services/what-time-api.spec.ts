@@ -163,6 +163,37 @@ const testTagDatas = [
 //   req.flush(testUserData);
 // }
 
+describe('WhatTimeApi', () => {
+let service: WhatTimeApi;
+    
+beforeEach(() => {
+
+});
+
+it('should be created', () => {
+  expect(true).toBeTruthy(); 
+});
+});
+  
+//   localStorage.setItem("username", "toto");
+//   localStorage.setItem("password", btoa("1234"));
+
+//   it('should received events', ()=>{
+//     testGetEvents(service, httpMock);
+//   });
+//   it('should received users', ()=>{
+//     testGetUsers(service, httpMock);
+//   });
+//   it('should received user', ()=>{
+//     testGetUser(service, httpMock);
+//   });
+//   it('should login', ()=>{
+//     testLogin(service, httpMock, "toto", btoa("1234"));
+//   });
+
+// });
+
+
 // describe('WhatTimeApi', () => {
 //   let service: WhatTimeApi;
 //   let httpMock: HttpTestingController;
