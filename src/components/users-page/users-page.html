@@ -30,6 +30,16 @@
                                     </div>
                                 }
                             </mat-nav-list></p>
+                        <p>Instriptions : 
+                            <mat-nav-list role="list">
+                                @for (inscription of userDetails()?.inscriptions ?? []; track inscription.id) {
+                                    <div matListItemMeta>
+                                        <!-- • {{inscription.eventId}} le {{inscription.eventDate | date:'shortDate'}} -->
+                                        • {{getEventName(inscription.eventId)}}
+                                    </div>
+                                }
+                            </mat-nav-list>
+                        </p>
                     </mat-expansion-panel>
                 }
                 <!-- <mat-expansion-panel>

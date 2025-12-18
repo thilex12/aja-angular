@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersDialog } from '../users-dialog/users-dialog';
+import { EventDetailsModel } from '../../models/event-details/event-details-module';
 
 
 @Component({
@@ -27,10 +28,12 @@ export class UsersPage implements OnInit {
   // protected listTags = ['tag 1', 'tag 2', 'tag 3',]
   // users = signal<UserModule[]>([]);
 
+  events = signal<EventDetailsModel[]>([]);
   api = inject(WhatTimeApi);
   users = signal<UserModel[]>([]);
   userDetails = signal<UserDetailsModel | null>(null);
   tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
+  // events = signal(JSON.parse(localStorage.getItem('events') || '[]'));
 
 
   getUserDetails(id: number) {
@@ -40,7 +43,16 @@ export class UsersPage implements OnInit {
     });
   }
 
+  getEventName(eventId: number): string {
+    const event = this.events().find(e => e.id === eventId);
+    return event?.name || `Événement ${eventId}`;
+  }
+
   ngOnInit() {
+    this.api.getEvents().subscribe((response) => {
+      this.events.set(response.content);
+      // console.log(this.events());
+    });
     // console.log("ngOnInit appelé");
     // console.log("Username:", localStorage.getItem('username'));
     // console.log("Password:", localStorage.getItem('password'));
