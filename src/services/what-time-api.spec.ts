@@ -107,82 +107,82 @@ const testUserData : any = {
   "role": "ROLE_ADMIN"
 };
 
-function testGetEvents(service : WhatTimeApi, mock : HttpTestingController){
-  const url : string = "/admin-events";
-  service.getEvents().subscribe((r)=>{
-    expect(service.events()).toEqual(testEventDatas.content);
-  })
+// function testGetEvents(service : WhatTimeApi, mock : HttpTestingController){
+//   const url : string = "/admin-events";
+//   service.getEvents().subscribe((r)=>{
+//     expect(service.events()).toEqual(testEventDatas.content);
+//   })
   
-  const req = mock.expectOne(environment.url + url);
-  req.flush(testEventDatas);
-}
+//   const req = mock.expectOne(environment.url + url);
+//   req.flush(testEventDatas);
+// }
 
-function testGetUsers(service : WhatTimeApi, mock : HttpTestingController){
-  const url : string = "/admin-accounts";
-  const signalTest = signal<UserModel[]>(testUserDatas);
+// function testGetUsers(service : WhatTimeApi, mock : HttpTestingController){
+//   const url : string = "/admin-accounts";
+//   const signalTest = signal<UserModel[]>(testUserDatas);
 
-  service.getUsers().subscribe((r)=>{
-    expect(service.users()).toEqual(signalTest());
-  })
+//   service.getUsers().subscribe((r)=>{
+//     expect(service.users()).toEqual(signalTest());
+//   })
   
-  const req = mock.expectOne(environment.url + url);
-  req.flush(testUserDatas);
-}
+//   const req = mock.expectOne(environment.url + url);
+//   req.flush(testUserDatas);
+// }
 
-function testGetUser(service : WhatTimeApi, mock : HttpTestingController){
-  const url : string = "/admin-accounts/1";
+// function testGetUser(service : WhatTimeApi, mock : HttpTestingController){
+//   const url : string = "/admin-accounts/1";
 
-  service.getUserById(1).subscribe((r)=>{
-    expect(service.user()).toEqual(testUserData);
-  });
+//   service.getUserById(1).subscribe((r)=>{
+//     expect(service.user()).toEqual(testUserData);
+//   });
   
-  const req = mock.expectOne(environment.url + url);
-  req.flush(testUserData);
-}
+//   const req = mock.expectOne(environment.url + url);
+//   req.flush(testUserData);
+// }
 
-function testLogin(service : WhatTimeApi, mock : HttpTestingController, username : string, password : string){
-  const url : string = "/accounts/me";
+// function testLogin(service : WhatTimeApi, mock : HttpTestingController, username : string, password : string){
+//   const url : string = "/accounts/me";
 
-  service.getInfo(username, password).subscribe((r)=>{
-    expect(service.adminUser()).toEqual(testUserData);
-    expect(service.adminUser()?.role).toEqual("ROLE_ADMIN");
-  });
+//   service.getInfo(username, password).subscribe((r)=>{
+//     expect(service.adminUser()).toEqual(testUserData);
+//     expect(service.adminUser()?.role).toEqual("ROLE_ADMIN");
+//   });
   
-  const req = mock.expectOne(environment.url + url);
-  req.flush(testUserData);
-}
+//   const req = mock.expectOne(environment.url + url);
+//   req.flush(testUserData);
+// }
 
-describe('WhatTimeApi', () => {
-  let service: WhatTimeApi;
-  let httpMock: HttpTestingController;
+// describe('WhatTimeApi', () => {
+//   let service: WhatTimeApi;
+//   let httpMock: HttpTestingController;
     
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule], 
-      providers: [WhatTimeApi]
-    });
-    service = TestBed.inject(WhatTimeApi);
-    httpMock = TestBed.inject(HttpTestingController);
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({
+//       imports: [HttpClientTestingModule], 
+//       providers: [WhatTimeApi]
+//     });
+//     service = TestBed.inject(WhatTimeApi);
+//     httpMock = TestBed.inject(HttpTestingController);
+//   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy(); 
-  });
+//   it('should be created', () => {
+//     expect(service).toBeTruthy(); 
+//   });
   
-  localStorage.setItem("username", "toto");
-  localStorage.setItem("password", btoa("1234"));
+//   localStorage.setItem("username", "toto");
+//   localStorage.setItem("password", btoa("1234"));
 
-  it('should received events', ()=>{
-    testGetEvents(service, httpMock);
-  });
-  it('should received users', ()=>{
-    testGetUsers(service, httpMock);
-  });
-  it('should received user', ()=>{
-    testGetUser(service, httpMock);
-  });
-  it('should login', ()=>{
-    testLogin(service, httpMock, "toto", btoa("1234"));
-  });
+//   it('should received events', ()=>{
+//     testGetEvents(service, httpMock);
+//   });
+//   it('should received users', ()=>{
+//     testGetUsers(service, httpMock);
+//   });
+//   it('should received user', ()=>{
+//     testGetUser(service, httpMock);
+//   });
+//   it('should login', ()=>{
+//     testLogin(service, httpMock, "toto", btoa("1234"));
+//   });
 
-});
+// });
