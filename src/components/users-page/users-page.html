@@ -1,9 +1,12 @@
-<app-layout>
+<app-layout class="toolbar">
     <mat-card class="listUsers" appearance="outlined">
         <mat-card-header>
             <mat-card-title>Utilisateurs</mat-card-title>
         </mat-card-header>
-        <br>
+        <!-- @if (loading) {
+            <mat-spinner></mat-spinner>        }
+        @else { -->
+            <br>
         <mat-card-content>
             <p>Nombre d'utilisateurs : {{users().length}}</p>
             <mat-accordion>
@@ -31,13 +34,13 @@
                 }
                 <!-- <mat-expansion-panel>
                     <mat-expansion-panel-header>
-                        <mat-panel-title> Utilisateur 1 </mat-panel-title>
+                        <mat-panel-title> Utilisateur {{user.id}} </mat-panel-title>
                         <mat-panel-description> description </mat-panel-description>
                     </mat-expansion-panel-header>
                     <mat-divider></mat-divider>
-                    <p>nom : Henri</p>
-                    <p>prénom : Poncaré</p>
-                    <p>mail : henri.care@mail.com</p>
+                    <p>nom : {{user.name}}</p>
+                    <p>prénom : {{user.surname}}</p>
+                    <p>mail : {{user.mail}}</p>
                     <p>tags : 
                         <mat-nav-list role="list">
                             @for (tag of listTags; track tag) {
@@ -67,6 +70,10 @@
                 </mat-expansion-panel> -->
             </mat-accordion>
         </mat-card-content>
+        <!-- } -->
     </mat-card>
+    <button matFab (click)="openDialog()" class="button-add ">
+        <mat-icon>add</mat-icon>
+    </button>
 <router-outlet/>
 </app-layout>

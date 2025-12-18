@@ -14,7 +14,7 @@ export class ApiCallService {
   protected prepareHeader(username : string | null, password : string | null) : Record<string, string | string[]>{
     let header: Record<string, string | string[]> = {};
     header["Content-Type"] ="application/json"; 
-    if (username && password) header["Authorization"] = "Basic " + btoa(username+":")+password; 
+    if (username && password) header["Authorization"] = "Basic " + btoa(username+":"+atob(password)); 
     return header;
   }
 
@@ -23,6 +23,7 @@ export class ApiCallService {
     const httpOptions = {
       headers: this.prepareHeader(username, password)
     };
+    console.log(this.apiURL+path);
     switch(method){
       case "GET" :{
         return this.http.get<T>(this.apiURL+path, httpOptions);

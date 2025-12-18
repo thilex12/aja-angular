@@ -27,14 +27,14 @@ export class LoginPage {
 
   login(form: NgForm) {
     this.email = form.value.email;
-    this.password = btoa(form.value.password);
+    this.password = btoa(form.value.password); // <= Encodage du password 
     this.api.getInfo(this.email, this.password).subscribe((response) => {
       this.role = this.api.adminUser()?.role;
 
       if (this.role === 'ROLE_ADMIN') {
         localStorage.setItem('username', this.email);
         localStorage.setItem('email', this.email);
-        localStorage.setItem('password', this.password);
+        localStorage.setItem('password', this.password); 
         this.api.getTags().subscribe();
         this.api.getLoc().subscribe();
         this.router.navigate(['/']);
