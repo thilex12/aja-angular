@@ -107,6 +107,17 @@ const testUserData : any = {
   "role": "ROLE_ADMIN"
 };
 
+const testTagDatas = [
+  {
+      "id": 1,
+      "name": "Beebo"
+  },
+  {
+      "id": 2,
+      "name": "Test2"
+  }
+];
+
 function testGetEvents(service : WhatTimeApi, mock : HttpTestingController){
   const url : string = "/admin-events";
   service.getEvents().subscribe((r)=>{
@@ -152,6 +163,18 @@ function testLogin(service : WhatTimeApi, mock : HttpTestingController, username
   req.flush(testUserData);
 }
 
+function testGetTags(service : WhatTimeApi, mock : HttpTestingController){
+  const url : string = "/tags";
+
+  service.getTags().subscribe((r)=>{
+    expect(service.tags()).toEqual(testTagDatas);
+    expect(localStorage.getItem("tags")).toEqual(JSON.stringify(testTagDatas));
+  });
+  
+  const req = mock.expectOne(environment.url + url);
+  req.flush(testTagDatas);
+}
+
 describe('WhatTimeApi', () => {
   let service: WhatTimeApi;
   let httpMock: HttpTestingController;
@@ -184,5 +207,7 @@ describe('WhatTimeApi', () => {
   it('should login', ()=>{
     testLogin(service, httpMock, "toto", btoa("1234"));
   });
-
+  it('should received tags', ()=>{
+    testGetTags(service, httpMock);
+  });
 });

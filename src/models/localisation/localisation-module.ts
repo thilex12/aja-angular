@@ -1,7 +1,7 @@
 export interface LocalisationModel { 
   id : number,
   name : string,
-  adress : string,
+  address : string,
   latitude : number,
   longitude : number,
   description : string

@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, Signal, computed } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Layout } from "../layout/layout";
 import { RouterOutlet } from "@angular/router";
@@ -8,18 +8,20 @@ import { MatListModule } from '@angular/material/list';
 // import { UserModule } from '../../models/user/user-module';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { UserModel } from '../../models/user/user-module';
-import { Page } from '../../models/page/page-module';
 import { UserDetailsModel } from '../../models/user-details/user-details-module';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersDialog } from '../users-dialog/users-dialog';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @Component({
   selector: 'app-users-page',
-  imports: [MatCardModule, Layout, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule],
+  imports: [MatCardModule, Layout, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule, MatButton, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './users-page.html',
   styleUrl: './users-page.scss',
 })
@@ -28,9 +30,19 @@ export class UsersPage implements OnInit {
   // users = signal<UserModule[]>([]);
 
   api = inject(WhatTimeApi);
-  users = signal<UserModel[]>([]);
   userDetails = signal<UserDetailsModel | null>(null);
   tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
+
+  search = signal<string>("");
+  users : Signal<UserModel[]> = computed(() => this.api.users().filter(
+      (line) => {
+        return  line.name.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
+                line.surname.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) ||
+                line.mail.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
+                line.id == parseInt(this.search());
+      }
+    )
+  );
 
 
   getUserDetails(id: number) {
@@ -49,8 +61,7 @@ export class UsersPage implements OnInit {
       next: (response) => {
         // console.log("Response complète:", response);
         // console.log("Response.content:", response);
-        this.users.set(response);
-        // console.log("Users() après set:", this.users());
+
       },
       error: (err) => {
         console.error("Erreur API:", err);
@@ -60,8 +71,12 @@ export class UsersPage implements OnInit {
   protected loading: boolean = true;
   protected dialog = inject(MatDialog);
 
-openDialog(): void {
+  openDialog(): void {
 
-  const dialogRef = this.dialog.open(UsersDialog, {});
-}
+    const dialogRef = this.dialog.open(UsersDialog, {});
+  }
+
+  protected onSubmit(form : any) : void{
+    this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal, Signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Layout } from "../layout/layout";
 import { RouterOutlet } from "@angular/router";
@@ -6,14 +6,35 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { L } from '@angular/cdk/keycodes';
+import { LocalisationModel } from '../../models/localisation/localisation-module';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-localisations-page',
-  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule],
+  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatButton, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './localisations-page.html',
   styleUrl: './localisations-page.scss',
 })
 export class LocalisationsPage {
-  locs = JSON.parse(localStorage.getItem('locations') || '[]');
+  fullLocs : Signal<LocalisationModel[]>  = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
+
+  search = signal<string>("");
+  locs : Signal<LocalisationModel[]> = computed(() => this.fullLocs().filter(
+      (line) => {
+        return  line.name?.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
+                line.address?.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) ||
+                line.description?.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
+                line.latitude == parseFloat(this.search()) || line.longitude == parseFloat(this.search()) ||
+                line.id == parseInt(this.search());
+      }
+    )
+  );
+
+  protected onSubmit(form : any) : void{
+    this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
+  }
 
 }

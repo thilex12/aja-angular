@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, Signal, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Layout } from "../layout/layout";
 import { RouterOutlet } from "@angular/router";
@@ -10,26 +10,37 @@ import { EventDetailsModel } from '../../models/event-details/event-details-modu
 import { Page } from '../../models/page/page-module';
 // import { pipe } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { MatFormField, MatInputModule, MatLabel } from "@angular/material/input";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+
 @Component({
   selector: 'app-events-page',
-  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, DatePipe],
+  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatButton, DatePipe, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './events-page.html',
   styleUrl: './events-page.scss',
 })
 export class EventsPage {
   api = inject(WhatTimeApi);
-  
-  events = signal<EventDetailsModel[]>([]);
-
   tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
-
   locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
+  protected search = signal(""); 
+  protected events = computed(() => this.api.events().filter(
+      (line) => {
+        return  line.name.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
+                line.description.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
+                line.id == parseInt(this.search());
+      }
+    )
+  );
+
   ngOnInit() {
-    this.api.getEvents().subscribe((response) => {
-      this.events.set(response.content);
-      // console.log(this.events());
-    });
+    this.api.getEvents().subscribe((response) => {});
   }
 
+  protected onSubmit(form : any) : void{
+    this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
+  }
 }
