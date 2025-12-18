@@ -1,0 +1,52 @@
+<app-layout>
+    <mat-card class="listLocalisation" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>Localisation</mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>      
+            <mat-accordion>
+                @for (loc of locs; track loc.id) {
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title> {{loc.address}} </mat-panel-title>
+                            <mat-panel-description> id : {{loc.id}} </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-divider></mat-divider>
+                        <p> Description : {{loc.description}} </p>
+                        <p> Adresse : {{loc.address}}</p>
+                        <p> Latitude : {{loc.latitude}} </p>
+                        <p> Longitude : {{loc.longitude}} </p>
+
+                    <!-- <p>Localisation : @for (loc of locs(); track loc.id) {
+                        @if (event.location === loc.id) {
+                            {{loc.address}} 
+                        } 
+                    }</p>
+                    <p>Début : {{event.startDate | date:'dd/MM/yyyy'}}</p>
+                    <p>Fin : {{event.endDate | date:'dd/MM/yyyy'}}</p>
+                    <p>desciption : {{event.description}}</p>
+                    <p>Tags : @for (tag of tags(); track tag.id) {
+                        @if (event.tags.includes(tag.id)) {
+                            {{tag.name}} 
+                        } 
+                    }</p> -->
+                    </mat-expansion-panel>
+                    }
+                <!-- <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title> Localisation 1 </mat-panel-title>
+                        <mat-panel-description> description </mat-panel-description>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title> Localisation 2 </mat-panel-title>
+                        <mat-panel-description> description </mat-panel-description>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel> -->
+            </mat-accordion>
+        </mat-card-content>
+    </mat-card>
+<router-outlet/>
+</app-layout>
