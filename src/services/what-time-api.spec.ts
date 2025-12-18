@@ -143,6 +143,19 @@ function testGetUser(service : WhatTimeApi, mock : HttpTestingController){
   req.flush(testEventDatas);
 }
 
+function testLogin(service : WhatTimeApi, mock : HttpTestingController, username : string, password : string){
+  const url : string = "/accounts/me";
+  const signalTest = signal<UserModel>(testUserData);
+
+  service.getInfo(username, password).subscribe((r)=>{
+    expect(service.user()).toEqual(signalTest());
+    expect(service.user()?.role).toEqual("ROLE_ADMIN");
+  });
+  
+  const req = mock.expectOne(environment.url + url);
+  req.flush(testEventDatas);
+}
+
 describe('WhatTimeApi', () => {
   let service: WhatTimeApi;
   let httpMock: HttpTestingController;
@@ -171,6 +184,9 @@ describe('WhatTimeApi', () => {
   });
   it('should received user', ()=>{
     testGetUser(service, httpMock);
+  });
+  it('should login', ()=>{
+    testLogin(service, httpMock, "toto", btoa("1234"));
   });
 
 });
