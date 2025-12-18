@@ -3,9 +3,9 @@
         <mat-card-header>
             <mat-card-title>Utilisateurs</mat-card-title>
         </mat-card-header>
-        <!-- @if (loading) {
+        @if (loadingPage()) {
             <mat-spinner></mat-spinner>        }
-        @else { -->
+        @else {
             <br>
         <mat-card-content>
             <p>Nombre d'utilisateurs : {{users().length}}</p>
@@ -18,18 +18,21 @@
                         </mat-expansion-panel-header>
                         <mat-divider></mat-divider>
                         <!-- Faire la liste en fonction du detail de l'utilisateur si on clique dessus -->
-
-                        <p>nom : {{userDetails()?.name}}</p>
-                        <p>prénom : {{userDetails()?.surname}}</p>
-                        <p>mail : {{userDetails()?.mail}}</p>
-                        <p>tags : 
-                            <mat-nav-list role="list">
-                                @for (tag of userDetails()?.followTags ?? []; track tag) {
-                                    <div matListItemMeta>
-                                        • {{tag.nameTag}}
-                                    </div>
-                                }
-                            </mat-nav-list></p>
+                        @if (loadingUser()) {
+                            <mat-spinner></mat-spinner>        }
+                        @else {
+                            <p>nom : {{userDetails()?.name}}</p>
+                            <p>prénom : {{userDetails()?.surname}}</p>
+                            <p>mail : {{userDetails()?.mail}}</p>
+                            <p>tags : 
+                                <mat-nav-list role="list">
+                                    @for (tag of userDetails()?.followTags ?? []; track tag) {
+                                        <div matListItemMeta>
+                                            • {{tag.nameTag}}
+                                        </div>
+                                    }
+                                </mat-nav-list></p>
+                        }
                     </mat-expansion-panel>
                 }
                 <!-- <mat-expansion-panel>
@@ -70,7 +73,7 @@
                 </mat-expansion-panel> -->
             </mat-accordion>
         </mat-card-content>
-        <!-- } -->
+        }
     </mat-card>
     <button matFab (click)="openDialog()" class="button-add ">
         <mat-icon>add</mat-icon>
