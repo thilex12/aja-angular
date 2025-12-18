@@ -2,19 +2,24 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Layout } from "../layout/layout";
 import { RouterOutlet } from "@angular/router";
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatListModule} from '@angular/material/list';
+import {  MatExpansionModule } from '@angular/material/expansion';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 // import { UserModule } from '../../models/user/user-module';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { UserModel } from '../../models/user/user-module';
 import { Page } from '../../models/page/page-module';
 import { UserDetailsModel } from '../../models/user-details/user-details-module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { UsersDialog } from '../users-dialog/users-dialog';
 
 
 @Component({
   selector: 'app-users-page',
-  imports: [MatCardModule, Layout, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule],
+  imports: [MatCardModule, Layout, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './users-page.html',
   styleUrl: './users-page.scss',
 })
@@ -52,4 +57,11 @@ export class UsersPage implements OnInit {
       }
     });
   }
+  protected loading: boolean = true;
+  protected dialog = inject(MatDialog);
+
+openDialog(): void {
+
+  const dialogRef = this.dialog.open(UsersDialog, {});
+}
 }

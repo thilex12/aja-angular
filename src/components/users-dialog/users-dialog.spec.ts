@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TagsPage } from './tags-page';
+import { UsersDialog } from './users-dialog';
 
-describe('TagsPage', () => {
-  let component: TagsPage;
-  let fixture: ComponentFixture<TagsPage>;
+describe('UsersDialog', () => {
+  let component: UsersDialog;
+  let fixture: ComponentFixture<UsersDialog>;
 
   beforeEach(async () => {
     // await TestBed.configureTestingModule({
-    //   imports: [TagsPage]
+    //   imports: [UsersDialog]
     // })
     // .compileComponents();
 
-    // fixture = TestBed.createComponent(TagsPage);
+    // fixture = TestBed.createComponent(UsersDialog);
     // component = fixture.componentInstance;
     // await fixture.whenStable();
   });
