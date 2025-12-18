@@ -48,7 +48,7 @@ jobs:
               tags: |
                 ${{ secrets.DOCKER_HUB_USERNAME }}/aja-angular:latest
                 ${{ secrets.DOCKER_HUB_USERNAME }}/aja-angular:${{ steps.extract_version.outputs.version }}
-#                ${{ secrets.DOCKER_HUB_USERNAME }}/aja-angular:${{ steps.extract_version.outputs.version }}-${{ steps.timestamp.outputs.timestamp }}
+                ${{ secrets.DOCKER_HUB_USERNAME }}/aja-angular:${{ steps.extract_version.outputs.version }}-${{ steps.timestamp.outputs.timestamp }}
 
     update-compose:
         runs-on: ubuntu-latest
