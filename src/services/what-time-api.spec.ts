@@ -109,10 +109,8 @@ const testUserData : any = {
 
 function testGetEvents(service : WhatTimeApi, mock : HttpTestingController){
   const url : string = "/admin-events";
-  const signalTest = signal<EventDetailsModel[]>(testEventDatas);
-
   service.getEvents().subscribe((r)=>{
-    expect(service.events()).toEqual(signalTest());
+    expect(service.events()).toEqual(testEventDatas.content);
   })
   
   const req = mock.expectOne(environment.url + url);
@@ -128,32 +126,30 @@ function testGetUsers(service : WhatTimeApi, mock : HttpTestingController){
   })
   
   const req = mock.expectOne(environment.url + url);
-  req.flush(testEventDatas);
+  req.flush(testUserDatas);
 }
 
 function testGetUser(service : WhatTimeApi, mock : HttpTestingController){
   const url : string = "/admin-accounts/1";
-  const signalTest = signal<UserModel>(testUserData);
 
   service.getUserById(1).subscribe((r)=>{
-    expect(service.user()).toEqual(signalTest());
+    expect(service.user()).toEqual(testUserData);
   });
   
   const req = mock.expectOne(environment.url + url);
-  req.flush(testEventDatas);
+  req.flush(testUserData);
 }
 
 function testLogin(service : WhatTimeApi, mock : HttpTestingController, username : string, password : string){
   const url : string = "/accounts/me";
-  const signalTest = signal<UserModel>(testUserData);
 
   service.getInfo(username, password).subscribe((r)=>{
-    expect(service.user()).toEqual(signalTest());
-    expect(service.user()?.role).toEqual("ROLE_ADMIN");
+    expect(service.adminUser()).toEqual(testUserData);
+    expect(service.adminUser()?.role).toEqual("ROLE_ADMIN");
   });
   
   const req = mock.expectOne(environment.url + url);
-  req.flush(testEventDatas);
+  req.flush(testUserData);
 }
 
 describe('WhatTimeApi', () => {
