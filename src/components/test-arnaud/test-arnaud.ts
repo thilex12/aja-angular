@@ -10,10 +10,10 @@ import { WhatTimeApi } from '../../services/what-time-api';
 export class TestArnaud {
   protected api = inject(WhatTimeApi);
 
-  protected test() {
-    this.api.getEvents().subscribe(r=>{
-      console.log(this.api.events());
-    })
+  // protected test() {
+  //   this.api.getEvents().subscribe(r=>{
+  //     console.log(this.api.events());
+  //   })
     
-  }
+  // }
 }

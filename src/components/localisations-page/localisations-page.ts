@@ -1,11 +1,13 @@
-import { Component, computed, signal, Signal } from '@angular/core';
+import { Component, inject, computed, signal, Signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Layout } from "../layout/layout";
 import { RouterOutlet } from "@angular/router";
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
-import { L } from '@angular/cdk/keycodes';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { WhatTimeApi } from '../../services/what-time-api';
 import { LocalisationModel } from '../../models/localisation/localisation-module';
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
@@ -14,12 +16,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-localisations-page',
-  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatButton, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
+  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButtonModule, MatButton, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './localisations-page.html',
   styleUrl: './localisations-page.scss',
 })
 export class LocalisationsPage {
-  fullLocs : Signal<LocalisationModel[]>  = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
+  // fullLocs : Signal<LocalisationModel[]>  = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
   search = signal<string>("");
   locs : Signal<LocalisationModel[]> = computed(() => this.fullLocs().filter(
@@ -36,5 +38,7 @@ export class LocalisationsPage {
   protected onSubmit(form : any) : void{
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
   }
+  api = inject(WhatTimeApi);
+  locs = this.api.getLoc();
 
 }

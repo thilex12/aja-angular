@@ -1,10 +1,12 @@
-import { Component, computed, Signal, signal } from '@angular/core';
+import { Component, inject, computed, Signal, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Layout } from "../layout/layout";
 import { RouterOutlet } from "@angular/router";
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import { WhatTimeApi } from '../../services/what-time-api';
+import { TagModel } from '../../models/tag/tag-module';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
@@ -19,6 +21,12 @@ import { TagModel } from '../../models/tag/tag-module';
   styleUrl: './tags-page.scss',
 })
 export class TagsPage {
+  api = inject(WhatTimeApi);
+
+  // protected tags = this.api.getTags();
+  getTags() : TagModel[]{
+    return this.api.getTags();
+  }
   protected fullTags : Signal<TagModel[]> = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
   protected search = signal(""); 
   protected tags : Signal<TagModel[]> = computed(() => this.fullTags().filter(

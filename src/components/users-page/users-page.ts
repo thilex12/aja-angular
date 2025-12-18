@@ -14,6 +14,9 @@ import { MatButton, MatButtonModule } from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersDialog } from '../users-dialog/users-dialog';
+import { EventDetailsModel } from '../../models/event-details/event-details-module';
+import { TagModel } from '../../models/tag/tag-module';
+import { LocalisationModel } from '../../models/localisation/localisation-module';
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,8 +32,28 @@ export class UsersPage implements OnInit {
   // protected listTags = ['tag 1', 'tag 2', 'tag 3',]
   // users = signal<UserModule[]>([]);
 
+  events = signal<EventDetailsModel[]>([]);
   api = inject(WhatTimeApi);
+  // users = signal<UserModel[]>([]);
   userDetails = signal<UserDetailsModel | null>(null);
+  tags = signal<TagModel[]>([]);
+  locs = signal<LocalisationModel[]>([]);
+  user = signal<UserModel | null>(null);
+
+
+  getEventName(eventId: number): string {
+    const event = this.events().find(e => e.id === eventId);
+    return event?.name || `Événement ${eventId}`;
+  }
+
+  getUserDetails(userId: number): void {
+    this.api.getUserById(userId);
+    // return this.api.getUserDetailsById(userId);
+  }
+  getUserSignal(): UserDetailsModel | null {
+    return this.api.getUserById();
+  }
+  
   tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
 
   search = signal<string>("");
@@ -53,6 +76,14 @@ export class UsersPage implements OnInit {
   }
 
   ngOnInit() {
+    this.events.set(this.api.getEvents());
+    this.locs.set(this.api.getLoc());
+    this.tags.set(this.api.getTags());
+    // this.users.set(this.api.getUsers());
+    // this.api.getUsers()
+  }
+
+
     // console.log("ngOnInit appelé");
     // console.log("Username:", localStorage.getItem('username'));
     // console.log("Password:", localStorage.getItem('password'));
@@ -71,10 +102,15 @@ export class UsersPage implements OnInit {
   protected loading: boolean = true;
   protected dialog = inject(MatDialog);
 
-  openDialog(): void {
+    openDialog(): void {
 
-    const dialogRef = this.dialog.open(UsersDialog, {});
+      const dialogRef = this.dialog.open(UsersDialog, {});
+    }
+
+  protected getUsers(): UserModel[]{
+    return this.api.getUsers();
   }
+
 
   protected onSubmit(form : any) : void{
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
