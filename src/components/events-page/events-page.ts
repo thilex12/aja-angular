@@ -5,6 +5,7 @@ import { RouterOutlet } from "@angular/router";
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { EventDetailsModel } from '../../models/event-details/event-details-module';
 import { Page } from '../../models/page/page-module';
@@ -12,7 +13,7 @@ import { Page } from '../../models/page/page-module';
 import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-events-page',
-  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, DatePipe],
+  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, DatePipe],
   templateUrl: './events-page.html',
   styleUrl: './events-page.scss',
 })
