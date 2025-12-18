@@ -29,7 +29,7 @@ function testContentType(observ : (url: string) => Observable<any>, mock : HttpT
 
   expect(req.request.headers.has('Content-Type')).toBeTruthy();
   expect(req.request.headers.get('Content-Type')).equal("application/json");
-  req.flush({});
+  req.flush(mockResponse);
 }
 
 function testIfBasicAuthOk(observ : (url: string) => Observable<any>, mock : HttpTestingController, auth : string | null = null){
@@ -49,7 +49,7 @@ function testIfBasicAuthOk(observ : (url: string) => Observable<any>, mock : Htt
   else {
     expect(req.request.headers.has('Authorization')).toBeFalsy();
   }
-  req.flush({});
+  req.flush(mockResponse);
 }
 
 describe('ApiCallService', () => {
