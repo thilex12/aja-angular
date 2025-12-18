@@ -59,68 +59,6 @@ export class UsersPage implements OnInit {
   }
   protected loading: boolean = true;
   protected dialog = inject(MatDialog);
-  protected listUsers = [
-    {
-        "id": 1,
-        "name": "John",
-        "surname": "John",
-        "mail": "mail@gmail.com"
-    },
-    {
-        "id": 2,
-        "name": "Henri",
-        "surname": "Poincaré",
-        "mail": "henri.care@gmail.com"
-    },
-    {
-        "id": 3,
-        "name": "John",
-        "surname": "Doe",
-        "mail": "gmail@mail.com"
-    },
-    {
-        "id": 4,
-        "name": "Arnaud",
-        "surname": "Peyrache",
-        "mail": "peyrachearnaud@gmail.com"
-    },
-    {
-        "id": 5,
-        "name": "John",
-        "surname": "John",
-        "mail": "mail@gmail.com"
-    },
-    {
-        "id": 6,
-        "name": "Henri",
-        "surname": "Poincaré",
-        "mail": "henri.care@gmail.com"
-    },
-    {
-        "id": 7,
-        "name": "John",
-        "surname": "Doe",
-        "mail": "gmail@mail.com"
-    },
-    {
-        "id": 8,
-        "name": "John",
-        "surname": "John",
-        "mail": "mail@gmail.com"
-    },
-    {
-        "id": 9,
-        "name": "Henri",
-        "surname": "Poincaré",
-        "mail": "henri.care@gmail.com"
-    },
-    {
-        "id": 10,
-        "name": "John",
-        "surname": "Doe",
-        "mail": "gmail@mail.com"
-    }
-]
 
 openDialog(): void {
 

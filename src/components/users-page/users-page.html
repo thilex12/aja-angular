@@ -3,9 +3,9 @@
         <mat-card-header>
             <mat-card-title>Utilisateurs</mat-card-title>
         </mat-card-header>
-        @if (loading) {
+        <!-- @if (loading) {
             <mat-spinner></mat-spinner>        }
-        @else {
+        @else { -->
             <br>
         <mat-card-content>
             <p>Nombre d'utilisateurs : {{users().length}}</p>
@@ -70,7 +70,7 @@
                 </mat-expansion-panel> -->
             </mat-accordion>
         </mat-card-content>
-        }
+        <!-- } -->
     </mat-card>
     <button matFab (click)="openDialog()" class="button-add ">
         <mat-icon>add</mat-icon>
