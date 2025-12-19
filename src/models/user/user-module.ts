@@ -3,6 +3,7 @@ export interface UserModel {
   name : string,
   surname : string,
   mail : string,
+  pwd : string
 }
 
 //  {
