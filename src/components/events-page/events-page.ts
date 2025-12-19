@@ -6,6 +6,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { EventDetailsModel } from '../../models/event-details/event-details-module';
 import { Page } from '../../models/page/page-module';
@@ -20,7 +21,7 @@ import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-events-page',
-  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButton, DatePipe, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
+  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButton, MatPaginatorModule, DatePipe, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './events-page.html',
   styleUrl: './events-page.scss',
 })
@@ -29,13 +30,33 @@ export class EventsPage {
   tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
   locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
-  protected search = signal(""); 
+  protected search = signal("");
+  protected allEvents = signal<EventDetailsModel[]>([]);
+  protected pageSize = signal(10);
+  protected pageIndex = signal(0);
+  protected totalElements = signal(0);
+  protected totalPages = signal(0);
 
-  getEvents() : EventDetailsModel[]{
-    return this.api.getEvents();
+  ngOnInit() {
+    this.loadEvents(0, this.pageSize());
   }
-  
-  protected events = computed(() => this.getEvents().filter(
+
+  loadEvents(page: number, size: number) {
+    this.api.getEventsPaginated(page, size, 'startDate,desc').subscribe((pageData: Page<EventDetailsModel>) => {
+      this.allEvents.set(pageData.content);
+      this.totalElements.set(pageData.totalElements);
+      this.totalPages.set(pageData.totalPages);
+      this.pageIndex.set(pageData.number);
+    });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageSize.set(event.pageSize);
+    this.pageIndex.set(event.pageIndex);
+    this.loadEvents(event.pageIndex, event.pageSize);
+  } 
+
+  protected events = computed(() => this.allEvents().filter(
       (line) => {
         return  line.name.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
                 line.description.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
