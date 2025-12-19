@@ -19,6 +19,7 @@ export class WhatTimeApi {
   protected http = inject(HttpClient);
 
   protected events = signal<EventDetailsModel[]>([])
+  protected eventsPage = signal<Page<EventDetailsModel> | null>(null);
   protected event = signal<EventDetailsModel | null>(null);
   protected adminUser = signal<UserDetailsModel | null>(null);
   protected user = signal<UserDetailsModel | null>(null);
@@ -31,15 +32,37 @@ export class WhatTimeApi {
   // prote
 
 
-  // public getEvents() : Observable<Page<EventDetailsModel>> {
+  // Méthode simple qui retourne tous les événements (compatible avec le code existant)
   public getEvents() : EventDetailsModel[] {
-
     if (this.events().length === 0) {
       this.http.get<Page<EventDetailsModel>>(this.url + '/admin-events').subscribe((response) => {
-      this.events.set(response.content);
-    });
+        this.events.set(response.content);
+        this.eventsPage.set(response);
+      });
     }
     return this.events();
+  }
+
+  // Nouvelle méthode pour gérer la pagination
+  public getEventsPaginated(page: number = 0, size: number = 20, sort: string = ''): Observable<Page<EventDetailsModel>> {
+    let params = `?page=${page}&size=${size}`;
+    if (sort) {
+      params += `&sort=${sort}`;
+    }
+    return this.http.get<Page<EventDetailsModel>>(this.url + '/admin-events' + params).pipe(
+      tap((response) => {
+        this.eventsPage.set(response);
+        // Optionnel : mettre à jour la liste complète si page 0
+        if (page === 0) {
+          this.events.set(response.content);
+        }
+      })
+    );
+  }
+
+  // Obtenir les informations de pagination
+  public getEventsPageInfo(): Page<EventDetailsModel> | null {
+    return this.eventsPage();
   }
 
   public getEventById(id: number): EventDetailsModel {
