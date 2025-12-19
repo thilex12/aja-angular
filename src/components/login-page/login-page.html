@@ -9,6 +9,15 @@
             <mat-label>Password</mat-label>
             <input matInput placeholder="Entrer votre mot de passe" name="password" ngModel required type="password" />
         </mat-form-field>
+        
+        @if (errorMessage) {
+            <div class="error-message">
+                <mat-icon>error</mat-icon>
+                <span>{{ errorMessage }}</span>
+            </div>
+        }
+        
+        
         <br/>
         <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>
     </form>
