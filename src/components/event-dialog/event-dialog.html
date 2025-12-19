@@ -1,33 +1,35 @@
 <div class="update-event-dialog">
   <h2 mat-dialog-title>
     <mat-icon>create</mat-icon>
-    Créer un event
+    Créer un événement
   </h2>
 
-  <form #updateForm="ngForm" (ngSubmit)="onUpdateClick(updateForm)">
+  <form #updateForm="ngForm" (ngSubmit)="onCreateClick(updateForm)">
     <mat-dialog-content>
       <div class="form-grid">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nom de l'événement</mat-label>
-          <input matInput name="name" ngModel required />
+          <input matInput name="name" [ngModel]="name()" required />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Description</mat-label>
-          <textarea matInput name="description" rows="3" ngModel></textarea>
+          <textarea matInput name="description" [ngModel]="description()" rows="3"></textarea>
         </mat-form-field>
 
         <div class="date-row">
           <mat-form-field appearance="outline">
             <mat-label>Date de début</mat-label>
-            <input matInput [matDatepicker]="startPicker" name="startDate" ngModel required />
+            <input matInput [matDatepicker]="startPicker" name="startDate" [ngModel]="startDate()" required />
+            <mat-hint>{{formatDate(startDate())}}</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
             <mat-datepicker #startPicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Date de fin</mat-label>
-            <input matInput [matDatepicker]="endPicker" name="endDate" ngModel required />
+            <input matInput [matDatepicker]="endPicker" name="endDate" [ngModel]="endDate()" required />
+            <mat-hint>{{formatDate(endDate())}}</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>
           </mat-form-field>
@@ -35,7 +37,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Localisation</mat-label>
-          <mat-select name="location" ngModel>
+          <mat-select name="location" [ngModel]="location()">
             @for (loc of locs(); track loc.id) {
               <mat-option [value]="loc.id">{{loc.name}} - {{loc.address}}</mat-option>
             }
@@ -44,7 +46,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Tags</mat-label>
-          <mat-select name="selectedTags" ngModel multiple>
+          <mat-select name="selectedTags" [ngModel]="selectedTags()" multiple>
             @for (tag of tags(); track tag.id) {
               <mat-option [value]="tag.id">{{tag.name}}</mat-option>
             }
@@ -52,8 +54,8 @@
         </mat-form-field>
 
         <div class="checkbox-row">
-          <mat-checkbox name="visibility" ngModel>Visible</mat-checkbox>
-          <mat-checkbox name="archived" ngModel>Archivé</mat-checkbox>
+          <mat-checkbox name="visibility" [ngModel]="visibility()">Visible</mat-checkbox>
+          <mat-checkbox name="archived" [ngModel]="archived()">Archivé</mat-checkbox>
         </div>
       </div>
     </mat-dialog-content>

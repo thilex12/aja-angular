@@ -35,9 +35,17 @@ import { LocalisationModel } from '../../models/localisation/localisation-module
 })
 export class EventDialog {
   readonly dialogRef = inject(MatDialogRef<EventDialog>);
-  readonly data = inject<EventDetailsModel>(MAT_DIALOG_DATA);
   readonly api = inject(WhatTimeApi);
   readonly datePipe = new DatePipe('en-US');
+
+  name = signal("");
+  description = signal("");
+  startDate = signal(new Date());
+  endDate = signal(new Date(Date.now() + 60 * 60 * 1000)); // now + 1 heure
+  location = signal("");
+  visibility = signal(true);
+  selectedTags = signal<number[]>([]);
+  archived = signal(false);
 
   // Charger les données une seule fois
   tags = signal<TagModel[]>(this.api.getTags());
@@ -51,14 +59,14 @@ export class EventDialog {
     this.dialogRef.close(null);
   }
 
-  onUpdateClick(form: NgForm): void {
+  onCreateClick(form: NgForm): void {
     if (form.valid) {
       const createdEvent: EventDetailsModel = {
         name: form.value.name,
         description: form.value.description,
         startDate: this.datePipe.transform(form.value.startDate, 'yyyy-MM-ddTHH:mm:ss') as any,
         endDate: this.datePipe.transform(form.value.endDate, 'yyyy-MM-ddTHH:mm:ss') as any,
-        location: form.value.location,
+        locationId: form.value.location,
         visibility: form.value.visibility,
         tags: form.value.selectedTags || [],
         id: 0, // non utilisé
@@ -68,9 +76,9 @@ export class EventDialog {
         creationDate: null
       };
 
-      console.log('Données envoyées au backend:', createdEvent);
       this.api.createEvent(createdEvent);
-      this.dialogRef.close(createdEvent);
+      this.dialogRef.close('created');
+      alert("Rechargez la page pour actualiser les users")
     }
   }
 }

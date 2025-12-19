@@ -7,7 +7,7 @@ export interface EventDetailsModel {
   creationDate : Date | null,
   startDate : Date,
   endDate : Date,
-  location : number,
+  locationId : number,
   visibility : boolean,
   tags : Array<number>
   inscriptions : Array<{
