@@ -21,14 +21,6 @@ export class UsersDialog {
   protected api = inject(WhatTimeApi);
 
   create(form: NgForm) {
-  // this.mail = form.value.email;
-  // this.password = form.value.password;
-  // this.api.getInfo(this.mail, this.password).subscribe((response) => {
-  //   this.api.createUser(this.name, this.surname, this.mail, btoa(this.password)).subscribe(() => {
-  //     this.dialogRef.close();
-  //   }
-  // );
-  // });
     this.password = btoa(form.value.password);
     this.mail = form.value.mail;
     this.name = form.value.name;
