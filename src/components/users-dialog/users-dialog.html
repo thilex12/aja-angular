@@ -23,11 +23,11 @@
         </mat-form-field>
     </div>
     <div>
-    Password:
-    <mat-form-field appearance="fill">
-        <mat-label>password</mat-label>
-        <input type="password" placeholder="Entrer votre mot de passe" name="password" ngModel required />
-    </mat-form-field>
+        Password:
+        <mat-form-field appearance="fill">
+            <mat-label>password</mat-label>
+            <input type="password" placeholder="Entrer votre mot de passe" name="password" ngModel required />
+        </mat-form-field>
     </div>
     <button mat-raised-button color="primary" type="submit" [disabled]="!createForm.valid" (click)="onCreateClick()">Créer</button>
   </form>
