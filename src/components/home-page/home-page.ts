@@ -22,8 +22,9 @@ export class HomePage {
   protected events = computed(()=>this.api.getEvents());
   protected users = computed(()=>this.api.getUsers());
 
-  /*ngOnInit() {
-    this._events.set(this.api.getEvents());
-    this._users.set(this.api.getUsers());
-  }*/
+  protected meanNbInscriptionsByUsers = computed(()=>{
+    //fpr
+  });
+  protected meanNbInscriptionsOnEvents : number = 0;
+
 }
