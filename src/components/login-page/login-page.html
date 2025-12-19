@@ -10,10 +10,10 @@
             <input matInput placeholder="Entrer votre mot de passe" name="password" ngModel required type="password" />
         </mat-form-field>
         
-        @if (errorMessage) {
+        @if (errorMessage()) {
             <div class="error-message">
                 <mat-icon>error</mat-icon>
-                <span>{{ errorMessage }}</span>
+                <span>{{ errorMessage() }}</span>
             </div>
         }
         

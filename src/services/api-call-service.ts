@@ -23,7 +23,7 @@ export class ApiCallService {
     const httpOptions = {
       headers: this.prepareHeader(username, password)
     };
-    console.log(this.apiURL+path);
+    // console.log(this.apiURL+path);
     switch(method){
       case "GET" :{
         return this.http.get<T>(this.apiURL+path, httpOptions);

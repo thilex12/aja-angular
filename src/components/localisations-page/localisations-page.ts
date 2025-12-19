@@ -50,7 +50,7 @@ export class LocalisationsPage {
   openDialog(): void {
     const dialogRef = this.dialog.open(LacalisationDialog, {});
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      // console.log(result);
     });
   }
 }

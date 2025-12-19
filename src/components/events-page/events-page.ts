@@ -87,7 +87,7 @@ export class EventsPage {
   openDialog(): void {
     const dialogRef = this.dialog.open(EventDialog, {});
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      // console.log(result);
     });
   }
 

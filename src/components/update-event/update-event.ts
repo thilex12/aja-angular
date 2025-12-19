@@ -70,10 +70,11 @@ export class UpdateEvent {
         endDate: this.datePipe.transform(form.value.endDate, 'yyyy-MM-ddTHH:mm:ss') as any,
         locationId: form.value.location,
         visibility: form.value.visibility,
+        archived: form.value.archived,
         tags: form.value.selectedTags || []
       };
 
-      console.log('Données envoyées au backend:', updatedEvent);
+      // console.log('Données envoyées au backend:', updatedEvent);
       this.api.updateEvent(this.data.id, updatedEvent);
       this.dialogRef.close(updatedEvent);
     }
