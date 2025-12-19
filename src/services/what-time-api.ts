@@ -152,6 +152,14 @@ export class WhatTimeApi {
     });
   }*/
 
+  public updateEvent(event: EventDetailsModel): EventDetailsModel {
+    this.http.put<EventDetailsModel>(this.url + `/admin-events/${event.id}`, event).subscribe((response) => {
+      // Mettre à jour le signal des événements après la modification
+      const updatedEvents = this.events().map(e => e.id === response.id ? response : e);
+      this.events.set(updatedEvents);
+    });
+    return event;
+  }
 
 
 }
