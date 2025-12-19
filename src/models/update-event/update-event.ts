@@ -6,5 +6,6 @@ export interface UpdateEventModel {
   endDate : Date,
   locationId : number,
   visibility : boolean,
+  archived : boolean,
   tags : Array<number>
 }

@@ -43,7 +43,7 @@ export class UsersPage {
   }
 
   protected getUsers(): UserModel[]{
-    console.log(this.api.getUsers());
+    // console.log(this.api.getUsers());
     return this.api.getUsers();
   }
   protected getUserDetails(userId: number): void {

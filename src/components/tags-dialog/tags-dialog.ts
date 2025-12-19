@@ -27,7 +27,7 @@ export class TagsDialog {
     this.tag.name = form.value.tag;
     this.api.createTag(this.tag); // Besoin de recharger la page pour voir la mise à jour
     this.dialogRef.close('created');
-    alert("Rechargez la page pour actualiser les users")
+    alert("Rechargez la page pour actualiser les tags")
 }
 
   onCancelClick(): void {
