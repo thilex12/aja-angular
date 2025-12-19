@@ -2,12 +2,6 @@
 
 Application web d'administration pour la gestion d'événements, développée avec Angular 21 et Angular Material.
 
-## Auteurs
-
-PEYRACHE Arnaud
-BAYARD Jean
-GUERRIER Alexandre
-
 ## 📋 Description
 
 WhatTime Admin est une interface d'administration permettant de gérer :
@@ -114,6 +108,11 @@ docker run -p 80:80 whattime-admin
 L'application sera accessible sur `http://localhost`
 
 ## 👥 Auteurs
+PEYRACHE Arnaud
+
+BAYARD Jean
+
+GUERRIER Alexandre
 
 Projet réalisé dans le cadre du cours Angular - M2 Yncréa
 
