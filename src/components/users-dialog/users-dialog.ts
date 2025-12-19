@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { MatButtonModule } from '@angular/material/button';
+import { UserModel } from '../../models/user/user-module';
 
 
 @Component({
@@ -15,19 +16,25 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class UsersDialog {
   readonly dialogRef = inject(MatDialogRef<UsersDialog>);
-  protected mail: string = '';
-  protected password: string = '';
-  protected name: string = '';
-  protected surname: string = '';
   protected api = inject(WhatTimeApi);
+  protected user : UserModel = {
+    id: 0,
+    name: '',
+    surname: '',
+    mail: '',
+    pwd : ''
+  };
 
   create(form: NgForm) {
-    this.password = btoa(form.value.password);
-    this.mail = form.value.mail;
-    this.name = form.value.name;
-    this.surname = form.value.surname;
-    this.dialogRef.close([this.password, this.mail, this.name, this.surname]);
-}
+    this.user.name = form.value.name;
+    this.user.surname = form.value.surname;
+    this.user.mail = form.value.mail;
+    this.user.pwd = form.value.password;
+    this.api.createUser(this.user); // Besoin de recharger la page pour voir la mise à jour
+    this.dialogRef.close('created');
+    alert("Rechargez la page pour actualiser les users")
+    //location.reload();
+  }
 
   onCancelClick(): void {
     this.dialogRef.close('cancelled');

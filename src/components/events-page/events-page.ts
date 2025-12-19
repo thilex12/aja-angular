@@ -84,6 +84,13 @@ export class EventsPage {
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EventDialog, {});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
   openUpdateDialog(event: EventDetailsModel): void {
     const dialogRef = this.dialog.open(UpdateEvent, {
       data: event,
@@ -95,13 +102,6 @@ export class EventsPage {
         // Rafraîchir la liste des événements après modification
         this.loadEvents(this.pageIndex(), this.pageSize());
       }
-    });
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(EventDialog, {});
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     });
   }
 }

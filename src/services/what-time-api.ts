@@ -139,6 +139,7 @@ export class WhatTimeApi {
     return this.locs();
   }
 
+  
   // Ajout
   /*
   public createTag(name: string, description: string): undefined {
@@ -158,6 +159,63 @@ export class WhatTimeApi {
     });
   }
 
+  public updateTag(tag : TagModel) : TagModel{
+    this.http.put<EventDetailsModel>(this.url + `/tags/${tag.id}`, tag).subscribe((response) => {
+      // Mettre à jour le signal des tags après la modification
+      const updatedTags = this.tags().map(t => t.id === response.id ? response : t);
+      this.tags.set(updatedTags);
+    });
+    return tag;
+  }
+
+  public updateLocs(loc : LocalisationModel) : LocalisationModel{
+    this.http.put<LocalisationModel>(this.url + `/locations/${loc.id}`, loc).subscribe((response) => {
+      // Mettre à jour le signal des locations après la modification
+      const updatedLocations = this.locs().map(l => l.id === response.id ? response : l);
+      this.locs.set(updatedLocations);
+    });
+    return loc;
+  }
+
+  public createUser(user : UserModel) : UserModel {
+    this.http.post<UserModel>(this.url + "/accounts", user).subscribe((response)=>{
+      // Mettre à jour le signal des users après l'ajout
+      const updatedAccounts = this.users();
+      updatedAccounts.push(response)
+      this.users.set(updatedAccounts);
+    });
+    return user;
+  }
+
+  public createTag(tag : TagModel) : TagModel {
+    this.http.post<TagModel>(this.url + "/tags", tag).subscribe((response)=>{
+      // Mettre à jour le signal des tags après l'ajout
+      const updatedTags = this.tags();
+      updatedTags.push(response)
+      this.tags.set(updatedTags);
+    });
+    return tag;
+  }
+
+  public createLoc(loc : LocalisationModel) : LocalisationModel {
+    this.http.post<LocalisationModel>(this.url + "/locations", loc).subscribe((response)=>{
+      // Mettre à jour le signal des locations après l'ajout
+      const updatedLocations = this.locs();
+      updatedLocations.push(response)
+      this.locs.set(updatedLocations);
+    });
+    return loc;
+  }
+
+  public createEvent(event : EventDetailsModel) : EventDetailsModel {
+    this.http.post<EventDetailsModel>(this.url + "/events", event).subscribe((response)=>{
+      // Mettre à jour le signal des users après l'ajout
+      const updatedEvents = this.events();
+      updatedEvents.push(response)
+      this.events.set(updatedEvents);
+    });
+    return event;
+  }
 
 }
 

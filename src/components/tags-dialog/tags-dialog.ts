@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { MatButtonModule } from '@angular/material/button';
+import { TagModel } from '../../models/tag/tag-module';
 
 
 
@@ -16,12 +17,17 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class TagsDialog {
   readonly dialogRef = inject(MatDialogRef<TagsDialog>);
-  protected tag: string = '';
+  protected tag : TagModel = {
+    id: 0,
+    name: ''
+  };
   protected api = inject(WhatTimeApi);
 
   createTag(form: NgForm) {
-    this.tag = form.value.tag;
-    this.dialogRef.close([this.tag]);
+    this.tag.name = form.value.tag;
+    this.api.createTag(this.tag); // Besoin de recharger la page pour voir la mise à jour
+    this.dialogRef.close('created');
+    alert("Rechargez la page pour actualiser les users")
 }
 
   onCancelClick(): void {
