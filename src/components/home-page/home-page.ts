@@ -17,8 +17,9 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class HomePage {
   api = inject(WhatTimeApi);
-  tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
-  locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
+
+  tags = this.api.getTags();
+  locs = this.api.getLocs();
 
   protected search = signal(""); 
   protected events = signal<EventDetailsModel[]>([]);
