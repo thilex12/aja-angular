@@ -1,18 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatDialog } from '@angular/material/dialog';
 import { UsersPage } from './users-page';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { WhatTimeApi } from '../../services/what-time-api';
-import { of, pipe, tap } from 'rxjs';
+import { of} from 'rxjs';
+import { UsersDialog } from '../users-dialog/users-dialog';
 
 describe('UsersPage', () => {
   let component: UsersPage;
   let fixture: ComponentFixture<UsersPage>;
-  let mockUsers: Partial<WhatTimeApi>;
-  let mockUserDetails: Partial<WhatTimeApi>;
+  let mockWhatTimeApi: Partial<WhatTimeApi>;
+  let matDialogMock: Partial<MatDialog>;
 
   beforeEach(async () => {
-    mockUserDetails = {getUsers: vi.fn().mockReturnValue(of({
+    matDialogMock = {
+        open: vi.fn()
+    }
+    mockWhatTimeApi = {
+        getUserById: vi.fn().mockReturnValue(of({
     "id": 1,
     "name": "John",
     "surname": "John",
@@ -38,8 +43,8 @@ describe('UsersPage', () => {
         }
     ],
     "role": "ROLE_USER"
-}))}
-        mockUsers = {getUsers: vi.fn().mockReturnValue(of([
+})),
+        getUsers: vi.fn().mockReturnValue([
     {
         "id": 1,
         "name": "John",
@@ -106,17 +111,13 @@ describe('UsersPage', () => {
         "surname": "Gamblin",
         "mail": "gamblin@gmail.com"
     }
-    ]))}
+    ])}
     await TestBed.configureTestingModule({
       imports: [UsersPage],
       providers: [
         provideRouter([], withComponentInputBinding()),
-        {
-          useValue: {
-            getUsers: vi.fn().mockReturnValue([mockUsers]),
-            getUserById: vi.fn().mockReturnValue(mockUserDetails)
-          }
-        }
+        { provide: WhatTimeApi, useValue: mockWhatTimeApi },
+        { provide: MatDialog, useValue: matDialogMock }
       ]
     })
     .compileComponents();
@@ -129,4 +130,24 @@ describe('UsersPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get users', () => {
+    expect(component.users().length).toBe(11);
+  });
+
+    it('should dialog return the good thing', () => {
+    const result = ['password', 'mail', 'name', 'surname'];
+    const dialogRefMock = {
+    afterClosed: () => of(result)
+    };
+    matDialogMock.open = vi.fn().mockReturnValue(dialogRefMock);
+
+    component.openDialog();
+
+    expect(matDialogMock.open).toHaveBeenLastCalledWith(UsersDialog , {})
+    });
+  
+//   it('should dialog', () => {
+//     fixture.nativeElement.querySelector('#button-dialog').click();
+//   })
 });
