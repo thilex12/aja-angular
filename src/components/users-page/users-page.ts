@@ -30,12 +30,11 @@ import { DatePipe } from '@angular/common';
   styleUrl: './users-page.scss',
 })
 export class UsersPage {
-  events = signal<EventDetailsModel[]>([]);
   api = inject(WhatTimeApi);
   userDetails = signal<UserDetailsModel | null>(null);
 
   protected getEventName(eventId: number): string {
-    const event = this.events().find(e => e.id === eventId);
+    const event = this.api.getEvents().find(e => e.id === eventId);
     return event?.name || `Événement ${eventId}`;
   }
 
