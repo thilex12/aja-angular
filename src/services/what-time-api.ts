@@ -156,7 +156,7 @@ export class WhatTimeApi {
     });
     return event;
   }
-
+  
 
 }
 
