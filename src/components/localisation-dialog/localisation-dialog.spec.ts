@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LacalisationDialog } from './lacalisation-dialog';
+import { LacalisationDialog } from './localisation-dialog';
 
 describe('LacalisationDialog', () => {
   let component: LacalisationDialog;

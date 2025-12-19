@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { LacalisationDialog } from '../lacalisation-dialog/lacalisation-dialog';
+import { LacalisationDialog } from '../localisation-dialog/localisation-dialog';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

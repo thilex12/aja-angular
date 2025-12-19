@@ -30,7 +30,10 @@ export class UsersDialog {
     this.user.surname = form.value.surname;
     this.user.mail = form.value.mail;
     this.user.pwd = form.value.password;
-    this.api.createUser(this.user);
+    this.api.createUser(this.user); // Besoin de recharger la page pour voir la mise à jour
+    this.dialogRef.close('created');
+    alert("Rechargez la page pour actualiser les users")
+    //location.reload();
   }
 
   onCancelClick(): void {
