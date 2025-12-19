@@ -18,19 +18,20 @@ import { TagModel } from '../../models/tag/tag-module';
 import { MatFormField, MatInputModule, MatLabel } from "@angular/material/input";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { UpdateEvent } from '../update-event/update-event';
+import { EventDialog } from '../event-dialog/event-dialog';
 
 @Component({
   selector: 'app-events-page',
-  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButton, MatPaginatorModule, DatePipe, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
+  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatButtonModule, MatDividerModule, MatListModule, MatIconModule, MatButton, MatPaginatorModule, DatePipe, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './events-page.html',
   styleUrl: './events-page.scss',
 })
 export class EventsPage {
   api = inject(WhatTimeApi);
-  dialog = inject(MatDialog);
 
+  protected dialog = inject(MatDialog);
   protected search = signal("");
   protected allEvents = signal<EventDetailsModel[]>([]);
   protected pageSize = signal(10);
@@ -94,6 +95,13 @@ export class EventsPage {
         // Rafraîchir la liste des événements après modification
         this.loadEvents(this.pageIndex(), this.pageSize());
       }
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EventDialog, {});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
     });
   }
 }
