@@ -44,6 +44,7 @@ export class UsersPage {
   }
 
   protected getUsers(): UserModel[]{
+    console.log(this.api.getUsers());
     return this.api.getUsers();
   }
   protected getUserDetails(userId: number): void {
@@ -65,11 +66,15 @@ export class UsersPage {
     )
   );
 
-  protected loading: boolean = true;
+  protected loadingPage = signal<boolean>(true);
+  protected loadingUser = signal<boolean>(true);
   protected dialog = inject(MatDialog);
 
   openDialog(): void {
     const dialogRef = this.dialog.open(UsersDialog, {});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   ngOnInit(){}

@@ -1,14 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {FormsModule, NgForm} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { WhatTimeApi } from '../../services/what-time-api';
+import { MatButtonModule } from '@angular/material/button';
 import { UserModel } from '../../models/user/user-module';
 
 
 @Component({
   selector: 'app-users-dialog',
-  imports: [MatDialogModule, FormsModule, MatFormFieldModule],
+  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './users-dialog.html',
   styleUrl: './users-dialog.scss',
 })
@@ -32,10 +34,6 @@ export class UsersDialog {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close();
-  }
-
-  onCreateClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close('cancelled');
   }
 }
