@@ -23,7 +23,6 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './localisations-page.scss',
 })
 export class LocalisationsPage {
-  // fullLocs : Signal<LocalisationModel[]>  = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
   search = signal<string>("");
   api = inject(WhatTimeApi);

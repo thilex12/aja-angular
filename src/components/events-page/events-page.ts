@@ -7,6 +7,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { EventDetailsModel } from '../../models/event-details/event-details-module';
 import { Page } from '../../models/page/page-module';
@@ -18,8 +19,8 @@ import { MatFormField, MatInputModule, MatLabel } from "@angular/material/input"
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
+import { UpdateEvent } from '../update-event/update-event';
 import { EventDialog } from '../event-dialog/event-dialog';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-events-page',
@@ -29,8 +30,6 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class EventsPage {
   api = inject(WhatTimeApi);
-  tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
-  locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
   protected dialog = inject(MatDialog);
   protected search = signal("");
@@ -39,11 +38,24 @@ export class EventsPage {
   protected pageIndex = signal(0);
   protected totalElements = signal(0);
   protected totalPages = signal(0);
+  
+  // Computed signals pour tags et locs
+  protected tags = computed(() => this.api.getTags());
+  protected locs = computed(() => this.api.getLocs());
+
+  getTagById(tagId: number): TagModel | undefined {
+    return this.tags().find(tag => tag.id === tagId);
+  }
+  getLocById(locId: number): LocalisationModel | undefined {
+    return this.locs().find(loc => loc.id === locId);
+  }
 
   ngOnInit() {
     this.loadEvents(0, this.pageSize());
+    // Déclencher le chargement des tags et locs
+    this.api.getTags();
+    this.api.getLocs();
   }
-
   loadEvents(page: number, size: number) {
     this.api.getEventsPaginated(page, size, 'startDate,desc').subscribe((pageData: Page<EventDetailsModel>) => {
       this.allEvents.set(pageData.content);
@@ -70,6 +82,20 @@ export class EventsPage {
 
   protected onSubmit(form : any) : void{
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
+  }
+
+  openUpdateDialog(event: EventDetailsModel): void {
+    const dialogRef = this.dialog.open(UpdateEvent, {
+      data: event,
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe((result: EventDetailsModel | null) => {
+      if (result) {
+        // Rafraîchir la liste des événements après modification
+        this.loadEvents(this.pageIndex(), this.pageSize());
+      }
+    });
   }
 
   openDialog(): void {
