@@ -41,8 +41,8 @@ export class LoginPage {
 
       if (this.role === 'ROLE_ADMIN') {
         
-        this.api.getTags();
-        this.api.getLoc();
+        //this.api.getTags();
+        //this.api.getLocs();
         this.router.navigate(['/']);
       } else {
         // Il faut etre admin pour entrer sur le site

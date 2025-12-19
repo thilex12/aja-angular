@@ -2,11 +2,17 @@
     <div class="users-container">
         <div class="users-header">
             <h1 class="page-title">Utilisateurs</h1>
-            <p class="users-count">{{getUsers().length}} utilisateur(s)</p>
         </div>
-        
+        <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+            <mat-form-field appearance="fill">
+                <mat-label>Recherche</mat-label>
+                <input matInput placeholder="Champ de recherche" name="searchField" ngModel #searchField="ngModel" />
+            </mat-form-field>
+            <button matButton type="submit" [disabled]="!myForm.form.valid" >Rechercher</button>
+        </form>
+            <p class="users-count">{{users().length}} utilisateur(s)</p>
         <div class="users-grid">
-            @for (user of getUsers(); track user.id) {
+            @for (user of users(); track user.id) {
                 <mat-card class="user-card" appearance="outlined" (click)="getUserDetails(user.id)">
                     <div class="user-header">
                         <div class="user-avatar">

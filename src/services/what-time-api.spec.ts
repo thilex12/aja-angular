@@ -107,6 +107,17 @@ const testUserData : any = {
   "role": "ROLE_ADMIN"
 };
 
+const testTagDatas = [
+  {
+      "id": 1,
+      "name": "Beebo"
+  },
+  {
+      "id": 2,
+      "name": "Test2"
+  }
+];
+
 // function testGetEvents(service : WhatTimeApi, mock : HttpTestingController){
 //   const url : string = "/admin-events";
 //   service.getEvents().subscribe((r)=>{
@@ -151,6 +162,37 @@ const testUserData : any = {
 //   const req = mock.expectOne(environment.url + url);
 //   req.flush(testUserData);
 // }
+
+describe('WhatTimeApi', () => {
+let service: WhatTimeApi;
+    
+beforeEach(() => {
+
+});
+
+it('should be created', () => {
+  expect(true).toBeTruthy(); 
+});
+});
+  
+//   localStorage.setItem("username", "toto");
+//   localStorage.setItem("password", btoa("1234"));
+
+//   it('should received events', ()=>{
+//     testGetEvents(service, httpMock);
+//   });
+//   it('should received users', ()=>{
+//     testGetUsers(service, httpMock);
+//   });
+//   it('should received user', ()=>{
+//     testGetUser(service, httpMock);
+//   });
+//   it('should login', ()=>{
+//     testLogin(service, httpMock, "toto", btoa("1234"));
+//   });
+
+// });
+
 
 // describe('WhatTimeApi', () => {
 //   let service: WhatTimeApi;

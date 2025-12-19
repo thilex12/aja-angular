@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, Signal, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Layout } from "../layout/layout";
 import { RouterOutlet } from "@angular/router";
@@ -13,22 +13,38 @@ import { Page } from '../../models/page/page-module';
 import { DatePipe } from '@angular/common';
 import { LocalisationModel } from '../../models/localisation/localisation-module';
 import { TagModel } from '../../models/tag/tag-module';
+import { MatFormField, MatInputModule, MatLabel } from "@angular/material/input";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+
 @Component({
   selector: 'app-events-page',
-  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, DatePipe],
+  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButton, DatePipe, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './events-page.html',
   styleUrl: './events-page.scss',
 })
 export class EventsPage {
   api = inject(WhatTimeApi);
-  
-  events = signal<EventDetailsModel[]>([]);
-  locs = signal<LocalisationModel[]>([]);
-  tags = signal<TagModel[]>([]);
-  ngOnInit() {
-    this.events.set(this.api.getEvents());
-    this.locs.set(this.api.getLoc());
-    this.tags.set(this.api.getTags());
-  }
+  tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
+  locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
+  protected search = signal(""); 
+
+  getEvents() : EventDetailsModel[]{
+    return this.api.getEvents();
+  }
+  
+  protected events = computed(() => this.getEvents().filter(
+      (line) => {
+        return  line.name.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
+                line.description.trim().toLowerCase().replaceAll("  ", " ").includes(this.search()) || 
+                line.id == parseInt(this.search());
+      }
+    )
+  );
+
+  protected onSubmit(form : any) : void{
+    this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
+  }
 }
