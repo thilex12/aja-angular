@@ -1,0 +1,56 @@
+.update-event-dialog {
+  min-width: 400px;
+  max-width: 600px;
+
+  h2[mat-dialog-title] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #7b1fa2;
+    margin-bottom: 16px;
+
+    mat-icon {
+      color: #7b1fa2;
+    }
+  }
+
+  mat-dialog-content {
+    padding: 16px 0;
+  }
+
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .date-row {
+    display: flex;
+    gap: 16px;
+
+    mat-form-field {
+      flex: 1;
+    }
+  }
+
+  .checkbox-row {
+    display: flex;
+    gap: 24px;
+    padding: 8px 0;
+  }
+
+  mat-dialog-actions {
+    padding: 16px 0 0 0;
+    gap: 8px;
+
+    button[mat-raised-button] {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}
