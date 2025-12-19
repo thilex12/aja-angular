@@ -44,7 +44,7 @@ export class UpdateEvent {
   description = signal(this.data.description);
   startDate = signal(new Date(this.data.startDate));
   endDate = signal(new Date(this.data.endDate));
-  location = signal(this.data.location);
+  location = signal(this.data.locationId);
   visibility = signal(this.data.visibility);
   selectedTags = signal<number[]>([...this.data.tags]);
   archived = signal(this.data.archived);
@@ -79,3 +79,5 @@ export class UpdateEvent {
     }
   }
 }
+
+

@@ -6,15 +6,10 @@ import { TagsPage } from '../components/tags-page/tags-page';
 import { UsersPage } from '../components/users-page/users-page';
 import { LocalisationsPage } from '../components/localisations-page/localisations-page';
 import { EventsPage } from '../components/events-page/events-page';
-import { TestArnaud } from '../components/test-arnaud/test-arnaud';
 import { authGuard } from '../guards/auth-guard';
 // import { LogoutPage } from '../components/logout-page/logout-page';
 
 export const routes: Routes = [
-    {
-        path: 'testArnaud',
-        component: TestArnaud 
-    },
     {
         path: 'login',
         component: LoginPage,
