@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Créer un nouveau tag</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="createTag(createTagForm)" (keyup.enter)="createTag(createTagForm)" #createTagForm="ngForm">
+    Nom du tag:
+    <mat-form-field appearance="fill">
+        <mat-label>tag</mat-label>
+        <input matInput placeholder="Entrer un tag" name="tag" ngModel required />    
+    </mat-form-field>
+    <br>
+    <mat-dialog-actions>
+    <button matButton (click)="onCancelClick()">Annuler</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!createTagForm.valid" >Créer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

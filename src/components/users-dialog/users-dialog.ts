@@ -4,11 +4,12 @@ import {FormsModule, NgForm} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { WhatTimeApi } from '../../services/what-time-api';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-users-dialog',
-  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule],
+  imports: [MatDialogModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './users-dialog.html',
   styleUrl: './users-dialog.scss',
 })

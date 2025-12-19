@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { LacalisationDialog } from '../lacalisation-dialog/lacalisation-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-localisations-page',
@@ -26,6 +28,7 @@ export class LocalisationsPage {
   search = signal<string>("");
   api = inject(WhatTimeApi);
 
+  protected dialog = inject(MatDialog);
   protected getLocs(): LocalisationModel[]{
       return this.api.getLocs();
     }
@@ -43,5 +46,12 @@ export class LocalisationsPage {
 
   protected onSubmit(form : any) : void{
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(LacalisationDialog, {});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 }

@@ -17,11 +17,13 @@ import { TagModel } from '../../models/tag/tag-module';
 import { MatFormField, MatInputModule, MatLabel } from "@angular/material/input";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
+import { EventDialog } from '../event-dialog/event-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-events-page',
-  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButton, MatPaginatorModule, DatePipe, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
+  imports: [Layout, MatCardModule, RouterOutlet, MatExpansionModule, MatButtonModule, MatDividerModule, MatListModule, MatIconModule, MatButton, MatPaginatorModule, DatePipe, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './events-page.html',
   styleUrl: './events-page.scss',
 })
@@ -30,6 +32,7 @@ export class EventsPage {
   tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
   locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
+  protected dialog = inject(MatDialog);
   protected search = signal("");
   protected allEvents = signal<EventDetailsModel[]>([]);
   protected pageSize = signal(10);
@@ -67,5 +70,12 @@ export class EventsPage {
 
   protected onSubmit(form : any) : void{
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EventDialog, {});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 }

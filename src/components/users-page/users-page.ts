@@ -44,6 +44,7 @@ export class UsersPage {
   }
 
   protected getUsers(): UserModel[]{
+    console.log(this.api.getUsers());
     return this.api.getUsers();
   }
   protected getUserDetails(userId: number): void {
@@ -71,6 +72,9 @@ export class UsersPage {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(UsersDialog, {});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   ngOnInit(){}
