@@ -14,5 +14,6 @@ export interface EventDetailsModel {
     id: number,
     accountId: number,
     eventId: number
-  }>
+  }>,
+  archived : boolean
 }

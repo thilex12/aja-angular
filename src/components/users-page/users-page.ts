@@ -20,11 +20,12 @@ import { LocalisationModel } from '../../models/localisation/localisation-module
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-users-page',
-  imports: [MatCardModule, Layout, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule, MatButton, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
+  imports: [MatCardModule, Layout, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule, MatButton, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule, DatePipe],
   templateUrl: './users-page.html',
   styleUrl: './users-page.scss',
 })
@@ -38,7 +39,12 @@ export class UsersPage {
     return event?.name || `Événement ${eventId}`;
   }
 
+  protected getEvent(eventId: number): EventDetailsModel | undefined {
+    return this.api.getEvents().find(e => e.id === eventId);
+  }
+
   protected getUsers(): UserModel[]{
+    console.log(this.api.getUsers());
     return this.api.getUsers();
   }
   protected getUserDetails(userId: number): void {
@@ -60,11 +66,15 @@ export class UsersPage {
     )
   );
 
-  protected loading: boolean = true;
+  protected loadingPage = signal<boolean>(true);
+  protected loadingUser = signal<boolean>(true);
   protected dialog = inject(MatDialog);
 
   openDialog(): void {
     const dialogRef = this.dialog.open(UsersDialog, {});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   ngOnInit(){}

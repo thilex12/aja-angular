@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Créer une nouvelle localisation</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="createEvent(createEventForm)" (keyup.enter)="createEvent(createEventForm)" #createEventForm="ngForm">
+    Nom:
+    <mat-form-field appearance="fill">
+        <mat-label>nom</mat-label>
+        <input matInput placeholder="Entrer un nom" name="name" ngModel required />    
+    </mat-form-field>
+    <br>
+    Localisation:
+    <mat-form-field appearance="fill">
+        <mat-label>localisation</mat-label>
+        <input matInput placeholder="Entrer une localisation" name="localisation" ngModel required />
+    </mat-form-field>
+    <br>
+    Date début:
+    <mat-form-field appearance="fill">
+        <mat-label>Date début</mat-label>
+        <input type="datetime" matInput placeholder="Entrer une date de début " name="debut" ngModel />
+    </mat-form-field>
+    <br>
+    Date fin:
+    <mat-form-field appearance="fill">
+        <mat-label>Date début</mat-label>
+        <input type="datetime" matInput matInput placeholder="Entrer une date de fin " name="fin" ngModel />
+    </mat-form-field>
+    <br>
+    Invite:
+    <mat-form-field appearance="fill">
+        <mat-label>Invite</mat-label>
+        <input matInput matInput placeholder="Entrer une personne à inviter " name="invite" ngModel />
+    </mat-form-field>
+    <br>
+    Description:
+    <mat-form-field appearance="fill">
+        <mat-label>description</mat-label>
+        <input matInput placeholder="Entrer une description" name="description" ngModel required />
+    </mat-form-field>
+    <br>
+    <mat-dialog-actions>
+    <button matButton (click)="onCancelClick()">Annuler</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!createEventForm.valid" >Créer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

@@ -95,3 +95,17 @@ button[mat-fab], button[mat-mini-fab] {
     background: var(--mat-sys-outline);
   }
 }
+
+// Bouton FAB global - doit rester fixe par rapport à la viewport
+.button-add {
+  position: fixed !important;
+  bottom: 32px !important;
+  right: 32px !important;
+  z-index: 1000 !important;
+  background-color: var(--mat-sys-primary) !important;
+  color: var(--mat-sys-on-primary) !important;
+  
+  mat-icon {
+    font-size: 24px;
+  }
+}

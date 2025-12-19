@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Créer une nouvelle localisation</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="createLocalisation(createLocalisationForm)" (keyup.enter)="createLocalisation(createLocalisationForm)" #createLocalisationForm="ngForm">
+    Nom:
+    <mat-form-field appearance="fill">
+        <mat-label>nom</mat-label>
+        <input matInput placeholder="Entrer un nom" name="name" ngModel required />    
+    </mat-form-field>
+    <br>
+    Adresse:
+    <mat-form-field appearance="fill">
+        <mat-label>adresse</mat-label>
+        <input matInput placeholder="Entrer une adresse" name="adress" ngModel required />
+    </mat-form-field>
+    <br>
+    Latitude-longitude:
+    <mat-form-field appearance="fill">
+        <mat-label>Latitude-longitude</mat-label>
+        <input matInput matInput placeholder="Entrer une latitude et une longitude " name="lat_long" ngModel />
+    </mat-form-field>
+    <br>
+    Description:
+    <mat-form-field appearance="fill">
+        <mat-label>description</mat-label>
+        <input matInput placeholder="Entrer une description" name="description" ngModel required />
+    </mat-form-field>
+    <br>
+    <mat-dialog-actions>
+    <button matButton (click)="onCancelClick()">Annuler</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!createLocalisationForm.valid" >Créer</button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>
