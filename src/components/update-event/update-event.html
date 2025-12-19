@@ -1,1 +1,69 @@
-<p>update-event works!</p>
+<div class="update-event-dialog">
+  <h2 mat-dialog-title>
+    <mat-icon>edit</mat-icon>
+    Modifier l'événement
+  </h2>
+
+  <form #updateForm="ngForm" (ngSubmit)="onUpdateClick(updateForm)">
+    <mat-dialog-content>
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom de l'événement</mat-label>
+          <input matInput name="name" [ngModel]="name()" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput name="description" [ngModel]="description()" rows="3"></textarea>
+        </mat-form-field>
+
+        <div class="date-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Date de début</mat-label>
+            <input matInput [matDatepicker]="startPicker" name="startDate" [ngModel]="startDate()" required />
+            <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date de fin</mat-label>
+            <input matInput [matDatepicker]="endPicker" name="endDate" [ngModel]="endDate()" required />
+            <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Localisation</mat-label>
+          <mat-select name="location" [ngModel]="location()">
+            @for (loc of this.api.getLocs(); track loc.id) {
+              <mat-option [value]="loc.id">{{loc.name}} - {{loc.address}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tags</mat-label>
+          <mat-select name="selectedTags" [ngModel]="selectedTags()" multiple>
+            @for (tag of this.api.getTags(); track tag.id) {
+              <mat-option [value]="tag.id">{{tag.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <div class="checkbox-row">
+          <mat-checkbox name="visibility" [ngModel]="visibility()">Visible</mat-checkbox>
+          <mat-checkbox name="archived" [ngModel]="archived()">Archivé</mat-checkbox>
+        </div>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button type="button" (click)="onCancelClick()">Annuler</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!updateForm.form.valid">
+        <mat-icon>save</mat-icon>
+        Enregistrer
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

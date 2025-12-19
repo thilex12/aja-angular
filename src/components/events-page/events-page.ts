@@ -7,6 +7,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { EventDetailsModel } from '../../models/event-details/event-details-module';
 import { Page } from '../../models/page/page-module';
@@ -18,6 +19,7 @@ import { MatFormField, MatInputModule, MatLabel } from "@angular/material/input"
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
+import { UpdateEvent } from '../update-event/update-event';
 
 @Component({
   selector: 'app-events-page',
@@ -27,6 +29,7 @@ import { MatButton } from '@angular/material/button';
 })
 export class EventsPage {
   api = inject(WhatTimeApi);
+  dialog = inject(MatDialog);
   tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
   locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
@@ -67,5 +70,19 @@ export class EventsPage {
 
   protected onSubmit(form : any) : void{
     this.search.set(form.value["searchField"].trim().toLowerCase().replaceAll("  ", " "));
+  }
+
+  openUpdateDialog(event: EventDetailsModel): void {
+    const dialogRef = this.dialog.open(UpdateEvent, {
+      data: event,
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe((result: EventDetailsModel | null) => {
+      if (result) {
+        // Rafraîchir la liste des événements après modification
+        this.loadEvents(this.pageIndex(), this.pageSize());
+      }
+    });
   }
 }

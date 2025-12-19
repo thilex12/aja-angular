@@ -14,7 +14,7 @@
         <p class="events-count">{{events().length}} événement(s)</p>
         <div class="events-grid">
             @for (event of events(); track event.id) {
-                <mat-card class="event-card" appearance="outlined">
+                <mat-card class="event-card" appearance="outlined" (click)="openUpdateDialog(event)">
                     <div class="event-header">
                         <div class="event-date-badge">
                             <mat-icon>event</mat-icon>
