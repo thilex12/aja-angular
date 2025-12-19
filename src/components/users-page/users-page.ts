@@ -20,11 +20,12 @@ import { LocalisationModel } from '../../models/localisation/localisation-module
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-users-page',
-  imports: [MatCardModule, Layout, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule, MatButton, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule],
+  imports: [MatCardModule, Layout, RouterOutlet, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule, MatButton, MatFormField, MatLabel, MatInputModule, MatFormFieldModule, FormsModule, DatePipe],
   templateUrl: './users-page.html',
   styleUrl: './users-page.scss',
 })
@@ -36,6 +37,10 @@ export class UsersPage {
   protected getEventName(eventId: number): string {
     const event = this.events().find(e => e.id === eventId);
     return event?.name || `Événement ${eventId}`;
+  }
+
+  protected getEvent(eventId: number): EventDetailsModel | undefined {
+    return this.api.getEvents().find(e => e.id === eventId);
   }
 
   protected getUsers(): UserModel[]{
