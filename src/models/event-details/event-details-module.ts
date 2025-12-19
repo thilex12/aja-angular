@@ -10,6 +10,9 @@ export interface EventDetailsModel {
   location : number,
   visibility : boolean,
   tags : Array<number>
+  inscriptions : Array<{
+    id: number,
+    accountId: number,
+    eventId: number
+  }>
 }
-
-
