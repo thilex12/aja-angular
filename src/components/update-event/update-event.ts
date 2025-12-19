@@ -11,6 +11,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { WhatTimeApi } from '../../services/what-time-api';
 import { EventDetailsModel } from '../../models/event-details/event-details-module';
+import { UpdateEventModel } from '../../models/update-event/update-event';
 import { TagModel } from '../../models/tag/tag-module';
 import { LocalisationModel } from '../../models/localisation/localisation-module';
 
@@ -49,28 +50,25 @@ export class UpdateEvent {
   // Data for selects
 
   
-  // tags = signal<TagModel[]>(JSON.parse(localStorage.getItem('tags') || '[]'));
-  // locs = signal<LocalisationModel[]>(JSON.parse(localStorage.getItem('locations') || '[]'));
-
   onCancelClick(): void {
     this.dialogRef.close(null);
   }
 
   onUpdateClick(form: NgForm): void {
     if (form.valid) {
-      const updatedEvent: EventDetailsModel = {
-        ...this.data,
+      const updatedEvent: UpdateEventModel = {
         name: form.value.name,
         description: form.value.description,
+        creationDate: this.data.creationDate,
         startDate: form.value.startDate,
         endDate: form.value.endDate,
-        location: form.value.location,
+        locationId: form.value.location,
         visibility: form.value.visibility,
         tags: form.value.selectedTags || [],
         archived: form.value.archived
       };
 
-      this.api.updateEvent(updatedEvent);
+      this.api.updateEvent(this.data.id, updatedEvent);
       this.dialogRef.close(updatedEvent);
     }
   }

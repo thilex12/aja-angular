@@ -2,6 +2,7 @@ import { inject, Injectable, Signal, signal } from '@angular/core';
 import { ApiCallService } from "./api-call-service";
 import { Page } from '../models/page/page-module';
 import { EventDetailsModel } from '../models/event-details/event-details-module';
+import { UpdateEventModel } from '../models/update-event/update-event';
 import { UserDetailsModel } from '../models/user-details/user-details-module';
 import { Observable, of, tap } from 'rxjs';
 import { TagModel } from '../models/tag/tag-module';
@@ -148,15 +149,14 @@ export class WhatTimeApi {
     });
   }*/
 
-  public updateEvent(event: EventDetailsModel): EventDetailsModel {
-    this.http.put<EventDetailsModel>(this.url + `/admin-events/${event.id}`, event).subscribe((response) => {
+  public updateEvent(eventId: number, event: UpdateEventModel): void {
+    this.http.put<EventDetailsModel>(this.url + `/admin-events/${eventId}`, event).subscribe((response) => {
       // Mettre à jour le signal des événements après la modification
       const updatedEvents = this.events().map(e => e.id === response.id ? response : e);
       this.events.set(updatedEvents);
     });
-    return event;
   }
-  
+
 
 }
 

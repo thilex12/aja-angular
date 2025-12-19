@@ -27,8 +27,6 @@ export class Layout {
       // localStorage.removeItem('email');
       localStorage.removeItem('password');
       localStorage.removeItem('username');
-      localStorage.removeItem('tags');
-      localStorage.removeItem('locations');
       this.router.navigate(['/login']);
     }
   }

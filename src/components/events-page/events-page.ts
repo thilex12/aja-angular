@@ -30,8 +30,8 @@ import { UpdateEvent } from '../update-event/update-event';
 export class EventsPage {
   api = inject(WhatTimeApi);
   dialog = inject(MatDialog);
-  tags = signal(JSON.parse(localStorage.getItem('tags') || '[]'));
-  locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
+  // tags = signal<TagModel[]>([]);
+  // locs = signal<LocalisationModel[]>([]);
 
   protected search = signal("");
   protected allEvents = signal<EventDetailsModel[]>([]);
@@ -44,6 +44,12 @@ export class EventsPage {
     this.loadEvents(0, this.pageSize());
   }
 
+  tags() : TagModel[] {
+    return this.api.getTags();
+  }
+  locs() : LocalisationModel[] {
+    return this.api.getLocs();
+  }
   loadEvents(page: number, size: number) {
     this.api.getEventsPaginated(page, size, 'startDate,desc').subscribe((pageData: Page<EventDetailsModel>) => {
       this.allEvents.set(pageData.content);
