@@ -30,8 +30,6 @@ import { UpdateEvent } from '../update-event/update-event';
 export class EventsPage {
   api = inject(WhatTimeApi);
   dialog = inject(MatDialog);
-  // tags = signal<TagModel[]>([]);
-  // locs = signal<LocalisationModel[]>([]);
 
   protected search = signal("");
   protected allEvents = signal<EventDetailsModel[]>([]);
@@ -39,16 +37,23 @@ export class EventsPage {
   protected pageIndex = signal(0);
   protected totalElements = signal(0);
   protected totalPages = signal(0);
+  
+  // Computed signals pour tags et locs
+  protected tags = computed(() => this.api.getTags());
+  protected locs = computed(() => this.api.getLocs());
+
+  getTagById(tagId: number): TagModel | undefined {
+    return this.tags().find(tag => tag.id === tagId);
+  }
+  getLocById(locId: number): LocalisationModel | undefined {
+    return this.locs().find(loc => loc.id === locId);
+  }
 
   ngOnInit() {
     this.loadEvents(0, this.pageSize());
-  }
-
-  tags() : TagModel[] {
-    return this.api.getTags();
-  }
-  locs() : LocalisationModel[] {
-    return this.api.getLocs();
+    // Déclencher le chargement des tags et locs
+    this.api.getTags();
+    this.api.getLocs();
   }
   loadEvents(page: number, size: number) {
     this.api.getEventsPaginated(page, size, 'startDate,desc').subscribe((pageData: Page<EventDetailsModel>) => {

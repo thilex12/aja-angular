@@ -30,11 +30,7 @@
                             <div class="event-detail-item">
                                 <mat-icon>location_on</mat-icon>
                                 <span>
-                                    @for (loc of locs(); track loc.id) {
-                                        @if (event.location === loc.id) {
-                                            {{loc.address}}
-                                        }
-                                    }
+                                    {{getLocById(event.location)?.address}}
                                 </span>
                             </div>
                             
@@ -45,10 +41,10 @@
                         </div>
                         
                         <div class="event-tags">
-                            @for (tag of tags(); track tag.id) {
-                                @if (event.tags.includes(tag.id)) {
-                                    <span class="event-tag">{{tag.name}}</span>
-                                }
+                            @for (tag of event.tags; track tag) {
+                                <span class="event-tag">
+                                    {{getTagById(tag)?.name}}
+                                </span>
                             }
                         </div>
                     </mat-card-content>

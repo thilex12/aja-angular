@@ -120,6 +120,7 @@ export class WhatTimeApi {
   // }
 
   public getTags(): TagModel[] {
+    // console.log(this.tags());
     if (this.tags().length === 0) {
       this.http.get<Array<TagModel>>(this.url + '/tags').subscribe((response) => {
         this.tags.set(response);
