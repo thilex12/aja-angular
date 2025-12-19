@@ -6,6 +6,8 @@ import { WhatTimeApi } from '../../services/what-time-api';
 import { EventDetailsModel } from '../../models/event-details/event-details-module';
 import { UserDetailsModel } from '../../models/user-details/user-details-module';
 import { UserModel } from '../../models/user/user-module';
+import { Page } from '../../models/page/page-module';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-home-page',
@@ -19,12 +21,30 @@ export class HomePage {
   locs = signal(JSON.parse(localStorage.getItem('locations') || '[]'));
 
   protected search = signal(""); 
-  protected events = computed(()=>this.api.getEvents());
+  protected events = signal<EventDetailsModel[]>([]);
   protected users = computed(()=>this.api.getUsers());
 
-  protected meanNbInscriptionsByUsers = computed(()=>{
-    //fpr
+  ngOnInit() {
+    this.loadEvents(0, 1000); // À éviter sur de lourdes bases de données oui, on utilise ceci ici pour éviter de créer une nouvelle route dans le temps imparti
+  }
+
+  loadEvents(page: number, size: number) {
+    this.api.getEventsPaginated(page, size, 'startDate,desc').subscribe((pageData: Page<EventDetailsModel>) => {
+      this.events.set(pageData.content);
+    });
+  }
+
+  protected nbEvents = computed(() => this.api.getEventsPageInfo()?.totalElements);
+
+  protected meanNbInscriptionsOnEvents = computed(() => {
+    let elmts = this.events();
+    let total = 0;
+    elmts.forEach((elmt)=>{
+      total += elmt.inscriptions.length;
+    });
+
+    return Math.round(total/this.nbEvents()!*100)/100; // 2 décimales après la virgule
   });
-  protected meanNbInscriptionsOnEvents : number = 0;
+
 
 }

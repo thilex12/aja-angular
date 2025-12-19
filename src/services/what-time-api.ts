@@ -137,6 +137,10 @@ export class WhatTimeApi {
     return this.locs();
   }
 
+  public putTag(tag : TagModel){
+    
+  }
+
   // Ajout
   /*
   public createTag(name: string, description: string): undefined {
