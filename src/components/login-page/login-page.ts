@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from "@angular/material/icon";
@@ -25,13 +25,13 @@ export class LoginPage {
   email: string = '';
   password: string = '';
   role: string | undefined = '';
-  errorMessage: string = '';
+  errorMessage = signal<string>('');
 
   userInfo: UserDetailsModel | null = null;
 
 
   login(form: NgForm) {
-    this.errorMessage = ''; // Réinitialiser le message d'erreur
+    this.errorMessage.set(''); // Réinitialiser le message d'erreur
     this.email = form.value.email;
     this.password = btoa(form.value.password); // <= Encodage du password *
     localStorage.setItem('username', this.email);
@@ -50,8 +50,8 @@ export class LoginPage {
           this.router.navigate(['/']);
         } else {
           // Il faut etre admin pour entrer sur le site
-          this.errorMessage = "Accès refusé : Vous devez être administrateur pour accéder à cette application.";
-          console.log("Message d'erreur défini:", this.errorMessage);
+          this.errorMessage.set("Accès refusé : Vous devez être administrateur pour accéder à cette application.");
+          console.log("Message d'erreur défini:", this.errorMessage());
           // Supprimer les credentials du localStorage pour forcer une nouvelle connexion
           localStorage.removeItem('username');
           localStorage.removeItem('password');
@@ -59,7 +59,7 @@ export class LoginPage {
       },
       error: (error) => {
         console.error('Erreur de connexion:', error);
-        this.errorMessage = "Erreur de connexion : Email ou mot de passe incorrect.";
+        this.errorMessage.set("Erreur de connexion : Email ou mot de passe incorrect.");
       }
     });
 

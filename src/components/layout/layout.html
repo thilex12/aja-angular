@@ -5,9 +5,9 @@
   <span class="page" routerLink="/users" routerLinkActive="active">Utilisateurs</span>
   <span class="page" routerLink="/localisations" routerLinkActive="active">Localisations</span>
 
-  <button class="button" matIconButton>
+  <!-- <button class="button" matIconButton>
     <mat-icon routerLink="/me">account_circle</mat-icon>
-  </button>
+  </button> -->
   <button class="button" matIconButton (click)="authButton()">
      @if (isLoggedIn()) {
        <mat-icon>logout</mat-icon>

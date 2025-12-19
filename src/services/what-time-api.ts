@@ -124,7 +124,7 @@ export class WhatTimeApi {
     if (this.tags().length === 0) {
       this.http.get<Array<TagModel>>(this.url + '/tags').subscribe((response) => {
         this.tags.set(response);
-        console.log("HERE");
+        // console.log("HERE");
       });
     }
     return this.tags();
