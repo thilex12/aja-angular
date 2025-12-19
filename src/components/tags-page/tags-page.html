@@ -8,7 +8,7 @@
             </mat-form-field> 
             <button matButton type="submit" [disabled]="!myForm.form.valid" >Rechercher</button>
         </form>
-        <p>Nombre de nombre tags : {{tags().length}}</p>
+        <p>Nombre de tags : {{tags().length}}</p>
         <div class="tags-grid">
             @for (tag of tags(); track tag.id) {
                 <mat-card class="tag-card" appearance="outlined">

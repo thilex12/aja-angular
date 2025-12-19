@@ -1,9 +1,9 @@
 <app-layout>
-    <mat-card class="listEvents" appearance="outlined">
-        <mat-card-header>
-            <mat-card-title>Événements</mat-card-title>
-        </mat-card-header>
-        <br>
+    <div class="events-container">
+        <div class="events-header">
+            <h1 class="page-title">Événements</h1>
+        </div>
+
         <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
             <mat-form-field appearance="fill">
                 <mat-label>Recherche</mat-label>
@@ -11,57 +11,51 @@
             </mat-form-field>
             <button matButton type="submit" [disabled]="!myForm.form.valid" >Rechercher</button>
         </form>
-        <mat-card-content>      
-            <p class="events-count">{{events().length}} événement(s)</p>
-            <mat-accordion>
+        <p class="events-count">{{events().length}} événement(s)</p>
+        <div class="events-grid">
+            @for (event of events(); track event.id) {
+                <mat-card class="event-card" appearance="outlined">
+                    <div class="event-header">
+                        <div class="event-date-badge">
+                            <mat-icon>event</mat-icon>
+                            <span>{{event.startDate | date:'dd MMM'}}</span>
+                        </div>
+                    </div>
+                    
+                    <mat-card-content class="event-content">
+                        <h2 class="event-title">{{event.name}}</h2>
+                        <p class="event-description">{{event.description}}</p>
+                        
+                        <div class="event-details">
+                            <div class="event-detail-item">
+                                <mat-icon>location_on</mat-icon>
+                                <span>
+                                    @for (loc of locs(); track loc.id) {
+                                        @if (event.location === loc.id) {
+                                            {{loc.address}}
+                                        }
+                                    }
+                                </span>
+                            </div>
+                            
+                            <div class="event-detail-item">
+                                <mat-icon>schedule</mat-icon>
+                                <span>{{event.startDate | date:'dd/MM/yyyy'}} - {{event.endDate | date:'dd/MM/yyyy'}}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="event-tags">
+                            @for (tag of tags(); track tag.id) {
+                                @if (event.tags.includes(tag.id)) {
+                                    <span class="event-tag">{{tag.name}}</span>
+                                }
+                            }
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            }
 
-                @for ( event of events(); track event.id) {
-                 <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title> {{event.name}} </mat-panel-title>
-                        <mat-panel-description> {{event.description}} </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <mat-divider></mat-divider>
-                    <p>Localisation : @for (loc of locs(); track loc.id) {
-                        @if (event.location === loc.id) {
-                            {{loc.address}} 
-                        } 
-                    }</p>
-                    <p>Début : {{event.startDate | date:'dd/MM/yyyy'}}</p>
-                    <p>Fin : {{event.endDate | date:'dd/MM/yyyy'}}</p>
-                    <p>desciption : {{event.description}}</p>
-                    <p>Tags : @for (tag of tags(); track tag.id) {
-                        @if (event.tags.includes(tag.id)) {
-                            {{tag.name}} 
-                        } 
-                    }</p>
-                </mat-expansion-panel>
-                }
-
-                <!-- <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title> Événement 1 </mat-panel-title>
-                        <mat-panel-description> description </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <mat-divider></mat-divider>
-                    <p>Localisation : 11 place de la république</p>
-                    <p>Début : 12/12/2025</p>
-                    <p>Fin : 15/12/2025</p>
-                    <p>desciption : événement décrit</p>
-                </mat-expansion-panel>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title> Événement 2 </mat-panel-title>
-                        <mat-panel-description> description </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <mat-divider></mat-divider>
-                    <p>Localisation : 11 place de la république</p>
-                    <p>Début : 11/12/2025</p>
-                    <p>Fin : 16/12/2025</p>
-                    <p>desciption : événement décrit</p>
-                </mat-expansion-panel> -->
-            </mat-accordion>
-        </mat-card-content>
-    </mat-card>
-<router-outlet/>
+        </div>
+    </div>
+    <router-outlet/>
 </app-layout>
