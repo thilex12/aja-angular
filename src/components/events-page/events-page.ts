@@ -21,7 +21,6 @@ import { FormsModule } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { UpdateEvent } from '../update-event/update-event';
 import { EventDialog } from '../event-dialog/event-dialog';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-events-page',
@@ -31,7 +30,6 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class EventsPage {
   api = inject(WhatTimeApi);
-  dialog = inject(MatDialog);
 
   protected dialog = inject(MatDialog);
   protected search = signal("");

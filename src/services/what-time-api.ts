@@ -207,6 +207,15 @@ export class WhatTimeApi {
     return loc;
   }
 
+  public createEvent(event : EventDetailsModel) : EventDetailsModel {
+    this.http.post<EventDetailsModel>(this.url + "/events", event).subscribe((response)=>{
+      // Mettre à jour le signal des users après l'ajout
+      const updatedEvents = this.events();
+      updatedEvents.push(response)
+      this.events.set(updatedEvents);
+    });
+    return event;
+  }
 
 }
 
