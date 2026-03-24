@@ -108,6 +108,11 @@ docker run -p 80:80 whattime-admin
 L'application sera accessible sur `http://localhost`
 
 ## 👥 Auteurs
+PEYRACHE Arnaud
+
+BAYARD Jean
+
+GUERRIER Alexandre
 
 Projet réalisé dans le cadre du cours Angular - M2 Yncréa
 
