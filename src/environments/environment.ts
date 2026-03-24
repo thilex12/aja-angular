@@ -1,3 +1,3 @@
 export const environment = {
-    url : "https://api.thilex.net/v1"
+    url : "http://api.thilex.net/v1"
 };
